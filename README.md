@@ -1,16 +1,55 @@
-# React + Vite
+## Levantar el proyecto:
+1. Clonar repositorio 
+2. Abrir terminal en raiz del proyecto
+3. Escribir:  
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+    ```bash
+    docker-compose up --build
+    ```
 
-Currently, two official plugins are available:
+## Estructura
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+El proyecto esta construido en una arquitectura monorepo.  
+Lo que permite separar el `backend/`y  `frontend/` 
 
-## React Compiler
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Raíz
+```bash
+.
+├── backend/                # Servidor PostgreSQL      
+├── docker-compose.yml      # Levanta backend y frontend
+├── frontend/               # Frontend con componeentes
+└── README.md               # Este archivo
+```
+### frontend/
+```bash
+.
+├── Dockerfile
+├── eslint.config.js    # Reglas de estilo
+├── index.html          # Pagina del navegador. React inyecta el code de forma dinamica
+├── package.json
+├── package-lock.json
+├── public/             # Archivos estaticos (PDFs, iconos de pestañas)
+├── src
+│   ├── App.css         # Estilo App.jsx
+│   ├── App.jsx         # Organiza y renderiza las vistas. Mantiene estructura global (ej: navbar, footer)
+│   ├── assets/         # Archivos multimedia
+│   ├── components/     # Componentes reutilizables (ej: boton, navbar)
+│   ├── index.css       # Estilos globales de todo el proyecto (ej: tipografia, color por defecto)
+│   ├── main.jsx        # Enlace del codigo de React con el HTML
+│   ├── services/       # Peticiones al backend
+│   └── views/          # Paginas completas
+└── vite.config.js
+```
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+### backend/
+```bash
+.
+├── Dockerfile
+├── package.json
+├── package-lock.json
+└── src/
+    ├── config/ 
+    │   └── db.js       # Gestiona las consultas con la BDD
+    └── index.js        # Verifica que la base de datos responda
+```
