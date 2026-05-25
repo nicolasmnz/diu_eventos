@@ -38,7 +38,7 @@ function Home() {
           />
 
           <DropdownCheckbox
-            titulo="Tipo de modalidades"
+            titulo="Tipo de modalidad"
             etiquetaCantidad="modalidades"
             etiquetaTodos="Todas las modalidades"
             opciones={tipos}
