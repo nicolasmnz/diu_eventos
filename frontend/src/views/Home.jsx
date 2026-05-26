@@ -1,5 +1,6 @@
 import { useState } from "react";
 import DropdownCheckbox from "../components/DropdownCheckbox";
+import EventCard from "../components/EventCard";
 
 import "./Home.css";
 
@@ -26,24 +27,33 @@ function Home() {
           <h1>Eventos</h1>
         </div>
       </section>
-      <main className="eventos-main">
-        <section className="filtros-eventos" aria-label="Filtros de eventos">
-          <DropdownCheckbox
-            titulo="Ubicación"
-            etiquetaCantidad="ubicaciones"
-            etiquetaTodos="Todos los emplazamientos"
-            opciones={sedes}
-            seleccionados={sedesSeleccionadas}
-            setSeleccionados={setSedesSeleccionadas}
-          />
+      <section className="filtros-eventos" aria-label="Filtros de eventos">
+        <DropdownCheckbox
+          titulo="Ubicación"
+          etiquetaCantidad="ubicaciones"
+          etiquetaTodos="Todos los emplazamientos"
+          opciones={sedes}
+          seleccionados={sedesSeleccionadas}
+          setSeleccionados={setSedesSeleccionadas}
+        />
 
-          <DropdownCheckbox
-            titulo="Tipo de modalidad"
-            etiquetaCantidad="modalidades"
-            etiquetaTodos="Todas las modalidades"
-            opciones={tipos}
-            seleccionados={tiposSeleccionados}
-            setSeleccionados={setTiposSeleccionados}
+        <DropdownCheckbox
+          titulo="Tipo de modalidad"
+          etiquetaCantidad="modalidades"
+          etiquetaTodos="Todas las modalidades"
+          opciones={tipos}
+          seleccionados={tiposSeleccionados}
+          setSeleccionados={setTiposSeleccionados}
+        />
+      </section>
+      <main className="eventos-main">
+        <section className="eventos-grid">
+          <EventCard
+            img={bannerEventos}
+            title="Evento1"
+            date={["25-05-2026"]}
+            ubication="Campus San Joaquín"
+            modalidad="Presencial"
           />
         </section>
       </main>

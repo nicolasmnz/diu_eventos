@@ -79,6 +79,7 @@
 .filtros-eventos {
   max-width: 1100px;
   margin: 0 auto;
+  padding: 56px 24px 32px;
 
   display: flex;
   justify-content: center;
