@@ -5,6 +5,9 @@ import EventCard from "../components/EventCard";
 import "./Home.css";
 
 import bannerEventos from "../assets/banner-eventos.jpg";
+import arch from "../assets/arch.webp";
+import asamblea from "../assets/asamblea.jpeg";
+import meado from "../assets/images.jpeg";
 
 function Home() {
   const sedes = [
@@ -49,10 +52,24 @@ function Home() {
       <main className="eventos-main">
         <section className="eventos-grid">
           <EventCard
-            img={bannerEventos}
-            title="Evento1"
-            date={["25-05-2026"]}
+            img={asamblea}
+            title="Asamblea Recurrente: Centro de Estudiantes Informatica"
+            date={["26-05-2026"]}
             ubication="Campus San Joaquín"
+            modalidad="Presencial"
+          />
+          <EventCard
+            img={arch}
+            title="Asamblea: Linux & OpenSource"
+            date={["28-05-2026"]}
+            ubication="Campus San Joaquín"
+            modalidad="Presencial"
+          />
+          <EventCard
+            img={meado}
+            title="1ra convención de Meado Artístico"
+            date={["30-05-2026"]}
+            ubication="Campus Casa Central Valparaíso"
             modalidad="Presencial"
           />
         </section>

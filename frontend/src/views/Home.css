@@ -88,3 +88,12 @@
 
   flex-wrap: wrap;
 }
+.eventos-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: flex-start;
+
+  gap: 32px;
+  columns: 3; /*Revisar si da problemas para celular*/
+}

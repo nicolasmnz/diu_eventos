@@ -17,9 +17,13 @@ function EventCard({ img, title, date, ubication, modalidad }) {
       </div>
       <section className="card-body">
         <h3 className="card-title">{title}</h3>
-        <button type="button">Más detalles</button>
+        <button className="card-button" type="button">
+          Más detalles
+        </button>
       </section>
-      <hr />
+
+      <hr className="card-separator" />
+
       <footer className="card-footer">
         <p>
           <strong>Fecha del evento:</strong> {obtenerFecha()}
