@@ -5,9 +5,11 @@ import EventCard from "../components/EventCard";
 import "./Home.css";
 
 import bannerEventos from "../assets/banner-eventos.jpg";
-import arch from "../assets/arch.webp";
-import asamblea from "../assets/asamblea.jpeg";
-import meado from "../assets/images.jpeg";
+
+import PAES from "../assets/Ensayo-PAES-agosto.jpg";
+import vivienda from "../assets/Operativo-vivienda-USM-viña.jpg";
+import data from "../assets/datafrontiers-2026-scaled.jpg";
+import conciertoPatrimonio from "../assets/concierto-dia-patrimonio.jpg";
 
 function Home() {
   const sedes = [
@@ -52,25 +54,40 @@ function Home() {
       <main className="eventos-main">
         <section className="eventos-grid">
           <EventCard
-            img={asamblea}
-            title="Asamblea Recurrente: Centro de Estudiantes Informatica"
+            img={PAES}
+            title="Ciclo Ensayo PAES 2026"
             date={["26-05-2026"]}
-            ubication="Campus San Joaquín"
+            hora="Por confirmar"
+            ubication="Todos"
             modalidad="Presencial"
+            mainTheme="Educación"
           />
           <EventCard
-            img={arch}
-            title="Asamblea: Linux & OpenSource"
-            date={["28-05-2026"]}
-            ubication="Campus San Joaquín"
+            img={vivienda}
+            title="Feria de la vivienda"
+            date={["02-06-2026"]}
+            hora="11:00"
+            ubication="Sede Viña del Mar"
             modalidad="Presencial"
+            mainTheme="Operativos"
           />
           <EventCard
-            img={meado}
-            title="1ra convención de Meado Artístico"
+            img={data}
+            title="Data Science International Congress Data Frontiers"
             date={["30-05-2026"]}
+            hora="Desde las 08:30"
             ubication="Campus Casa Central Valparaíso"
             modalidad="Presencial"
+            mainTheme="Congreso"
+          />
+          <EventCard
+            img={conciertoPatrimonio}
+            title="Concierto “Día del Patrimonio, músicas del mundo"
+            date={["31-05-2026"]}
+            hora="12:30"
+            ubication="Externo"
+            modalidad="Presencial"
+            mainTheme="Música"
           />
         </section>
       </main>
