@@ -1,6 +1,14 @@
 import "./EventCard.css";
 
-function EventCard({ img, title, date, ubication, modalidad }) {
+function EventCard({
+  img,
+  title,
+  date,
+  hora,
+  ubication,
+  modalidad,
+  mainTheme,
+}) {
   function obtenerFecha() {
     if (Array.isArray(date) && date.length === 2) {
       const [desde, hasta] = date;
@@ -15,11 +23,11 @@ function EventCard({ img, title, date, ubication, modalidad }) {
         <span>{ubication}</span>
         <span>{modalidad}</span>
       </div>
+      <div className="theme-chip">
+        <span>{mainTheme}</span>
+      </div>
       <section className="card-body">
         <h3 className="card-title">{title}</h3>
-        <button className="card-button" type="button">
-          Más detalles
-        </button>
       </section>
 
       <hr className="card-separator" />
@@ -27,6 +35,9 @@ function EventCard({ img, title, date, ubication, modalidad }) {
       <footer className="card-footer">
         <p>
           <strong>Fecha del evento:</strong> {obtenerFecha()}
+        </p>
+        <p>
+          <strong>Hora del evento:</strong> {hora}
         </p>
       </footer>
     </article>
