@@ -88,14 +88,19 @@
 
   flex-wrap: wrap;
 }
+
 .eventos-grid {
   max-width: 1200px;
   margin: 0 auto;
 
   display: grid;
-  grid-template-columns: repeat(3, 372px);
+  grid-template-columns: repeat(auto-fit, minmax(320px, 360px));
   justify-content: center;
-  align-items: flex-start;
-
   gap: 32px;
+}
+
+@media (max-width: 480px) {
+  .eventos-grid {
+    grid-template-columns: 1fr;
+  }
 }

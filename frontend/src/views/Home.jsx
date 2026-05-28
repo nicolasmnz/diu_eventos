@@ -56,8 +56,8 @@ function Home() {
           <EventCard
             img={PAES}
             title="Ciclo Ensayo PAES 2026"
-            date={["26-05-2026"]}
-            hora="Por confirmar"
+            date="26-05-2026"
+            hora=""
             ubication="Todos"
             modalidad="Presencial"
             mainTheme="Educación"
@@ -65,8 +65,8 @@ function Home() {
           <EventCard
             img={vivienda}
             title="Feria de la vivienda"
-            date={["02-06-2026"]}
-            hora="11:00"
+            date="02-06-2026"
+            hora="11:00 AM"
             ubication="Sede Viña del Mar"
             modalidad="Presencial"
             mainTheme="Operativos"
@@ -74,17 +74,17 @@ function Home() {
           <EventCard
             img={data}
             title="Data Science International Congress Data Frontiers"
-            date={["30-05-2026"]}
-            hora="Desde las 08:30"
-            ubication="Campus Casa Central Valparaíso"
+            date="30-05-2026"
+            hora="08:30 AM"
+            ubication="Campus San Joaquín"
             modalidad="Presencial"
             mainTheme="Congreso"
           />
           <EventCard
             img={conciertoPatrimonio}
-            title="Concierto “Día del Patrimonio, músicas del mundo"
-            date={["31-05-2026"]}
-            hora="12:30"
+            title="Concierto Día del Patrimonio, músicas del mundo Congress Data Frontiers "
+            date="31-05-2026"
+            hora="12:30 PM"
             ubication="Externo"
             modalidad="Presencial"
             mainTheme="Música"
