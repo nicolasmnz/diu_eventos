@@ -9,11 +9,6 @@ import "./Home.css";
 
 import bannerEventos from "../assets/banner-eventos.jpg";
 
-import PAES from "../assets/Ensayo-PAES-agosto.jpg";
-import vivienda from "../assets/Operativo-vivienda-USM-viña.jpg";
-import data from "../assets/datafrontiers-2026-scaled.jpg";
-import conciertoPatrimonio from "../assets/concierto-dia-patrimonio.jpg";
-
 function Home() {
   const [busqueda, setBusqueda] = useState("");
 
@@ -25,6 +20,7 @@ function Home() {
     "Sede Concepción",
     "Externo",
   ];
+
   const tipos = ["Presencial", "Online", "Híbrido"];
   const tematicas = [
     "Musica",
@@ -83,6 +79,14 @@ function Home() {
       />
 
       <main className="eventos-main">
+        {cargando && <p>Cargando eventos...</p>}
+
+        {error && <p>{error}</p>}
+
+        {!cargando && !error && eventosFiltrados.length === 0 && (
+          <p>No existen eventos que coincidan con los filtros seleccionados.</p>
+        )}
+
         <section className="eventos-grid">
           <EventCard
             img={PAES}
