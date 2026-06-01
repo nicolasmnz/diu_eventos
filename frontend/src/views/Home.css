@@ -1,7 +1,7 @@
 .banner-eventos {
   position: relative;
   width: 100%;
-  height: 449px;
+  height: 390px;
   overflow: hidden;
 }
 
@@ -11,6 +11,8 @@
   object-fit: cover;
   object-position: center top;
   display: block;
+
+  z-index: 0;
 }
 
 /* Capa oscura encima de la imagen */
@@ -25,49 +27,101 @@
     rgba(0, 0, 0, 0.3) 65%,
     rgba(0, 0, 0, 0.95) 100%
   );
+
+  z-index: 1;
 }
 
 .banner-content {
   position: absolute;
   left: 18%;
   bottom: 60px;
-  z-index: 1;
+  z-index: 2;
   color: white;
 }
 
-.banner-eventos-content {
+.banner-tools {
   position: absolute;
-  left: 18%;
-  bottom: 55px;
-  z-index: 2;
+  inset: 0;
+  z-index: 4;
+
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  align-items: center;
+
+  padding: 0 8%;
+  gap: 40px;
+}
+
+.mini-calendar {
+  position: absolute;
+  right: 8%;
+  bottom: 60px;
+  z-index: 3;
+}
+
+.banner-search {
+  width: 100%;
+  max-width: 760px;
+
+  justify-self: center;
+
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.search-box {
+  width: 100%;
+  height: 56px;
 
   display: flex;
   align-items: center;
-  gap: 16px;
+
+  background-color: white;
+  border-radius: 12px;
+  overflow: hidden;
+
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.22);
 }
 
-.barra-amarilla {
-  width: 4px;
-  height: 40px;
-  background-color: #f5b400;
-  display: inline-block;
+.search-box input {
+  flex: 1;
+  height: 100%;
 
-  margin-right: 12px;
+  border: none;
+  outline: none;
+
+  padding: 0 20px;
+
+  font-size: 1rem;
+  font-weight: 500;
+  color: #222;
 }
 
-.banner-eventos-content h1 {
-  margin: 10;
+.search-box input::placeholder {
+  color: #8f8f8f;
+}
+
+.search-box button {
+  height: 100%;
+  padding: 0 28px;
+
+  border: none;
+  background-color: #f7ae00;
   color: white;
 
-  font-family: "Montserrat", sans-serif;
+  font-weight: 800;
+  font-size: 0.95rem;
 
-  font-size: 39px;
-  font-weight: 900;
+  cursor: pointer;
 
-  letter-spacing: -1px;
-  line-height: 1;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
 
-  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.45);
+.search-box button:hover {
+  background-color: #002855;
 }
 
 .eventos-main {
@@ -77,16 +131,26 @@
 }
 
 .filtros-eventos {
-  max-width: 1100px;
-  margin: 0 auto;
-  padding: 56px 24px 32px;
+  grid-column: 2;
 
   display: flex;
-  justify-content: center;
-  align-items: flex-start;
-  gap: 32px;
+  flex-direction: column;
+  gap: 14px;
 
-  flex-wrap: wrap;
+  justify-self: center;
+  align-self: center;
+
+  margin: 0;
+  padding: 0;
+}
+
+.mini-calendar {
+  grid-column: 3;
+
+  position: static;
+
+  justify-self: center;
+  align-self: center;
 }
 
 .eventos-grid {
@@ -98,9 +162,43 @@
   justify-content: center;
   gap: 32px;
 }
+@media (max-width: 1000px) {
+  .banner-eventos {
+    height: 620px;
+  }
+
+  .banner-tools {
+    grid-template-columns: 1fr;
+    padding: 48px 24px;
+    gap: 28px;
+  }
+
+  .banner-search {
+    max-width: 620px;
+  }
+
+  .search-label {
+    font-size: 2rem;
+  }
+}
 
 @media (max-width: 480px) {
-  .eventos-grid {
-    grid-template-columns: 1fr;
+  .banner-eventos {
+    height: 680px;
+  }
+
+  .search-box {
+    height: auto;
+    flex-direction: column;
+  }
+
+  .search-box input {
+    height: 52px;
+    width: 100%;
+  }
+
+  .search-box button {
+    width: 100%;
+    height: 48px;
   }
 }

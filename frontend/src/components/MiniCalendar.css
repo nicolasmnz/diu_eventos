@@ -1,0 +1,149 @@
+.calendar {
+  width: 340px;
+  background-color: white;
+  border-radius: 12px;
+  overflow: hidden;
+
+  border-top: 5px solid #f7ae00;
+
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.22);
+
+  font-family: "Montserrat", Arial, sans-serif;
+}
+
+.calendar-header {
+  height: 56px;
+  padding: 0 18px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background-color: #002855;
+  color: white;
+}
+
+.calendar-header button {
+  width: 34px;
+  height: 34px;
+
+  border: none;
+  border-radius: 999px;
+
+  background-color: rgba(255, 255, 255, 0.14);
+  color: white;
+
+  font-size: 1.2rem;
+  font-weight: 800;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.calendar-header button:hover {
+  background-color: rgba(255, 255, 255, 0.24);
+  transform: translateY(-2px);
+}
+
+.monthYear {
+  text-align: center;
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.days {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+
+  background-color: #f7f7f7;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.calendar-day {
+  padding: 10px 0;
+
+  text-align: center;
+  color: #006b9a;
+
+  font-size: 0.75rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.dates {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+
+  padding: 12px;
+}
+
+.date {
+  width: 36px;
+  height: 36px;
+  margin: auto;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border: 2px solid transparent;
+  border-radius: 999px;
+
+  background-color: transparent;
+  color: #222;
+
+  font-size: 0.85rem;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.date:hover {
+  border: 2px solid #006b9a;
+  color: black;
+  transform: translateY(-2px);
+}
+
+.date.active {
+  border: 2px solid #f7ae00;
+  color: black;
+}
+
+.date.active:hover {
+  border: 2px solid #f7ae00;
+}
+
+.date.selected {
+  background-color: #006b9a;
+  border-color: #006b9a;
+  color: white;
+}
+
+.date.active.selected {
+  background-color: #f7ae00;
+  border-color: #f7ae00;
+  color: white;
+}
+
+.date.inactive {
+  color: #c9c9c9;
+  cursor: default;
+}
+
+.date.inactive:hover {
+  border-color: transparent;
+  background-color: transparent;
+  color: #c9c9c9;
+  transform: none;
+}

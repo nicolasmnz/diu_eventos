@@ -63,13 +63,13 @@ function DropdownCheckbox({
 
       {abierto && (
         <div className="dropdown-menu">
-          <label className="dropdown-item">
+          <label className="dropdown-item dropdown-item-todos">
             <input
               type="checkbox"
               checked={todosSeleccionados}
               onChange={manejarTodos}
             />
-            <span>Todas las opciones</span>
+            <span>{etiquetaTodos}</span>
           </label>
           <div className="dropdown-separador"></div>
           {opciones.map((opcion) => (

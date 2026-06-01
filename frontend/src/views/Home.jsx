@@ -1,6 +1,9 @@
 import { useState } from "react";
-import DropdownCheckbox from "../components/DropdownCheckbox";
-import EventCard from "../components/EventCard";
+//import DropdownCheckbox from "../components/DropdownCheckbox.jsx";
+import EventCard from "../components/EventCard.jsx";
+import Header from "../components/Header.jsx";
+import MiniCalendar from "../components/MiniCalendar.jsx";
+import StickyFilters from "../components/StickyFilters.jsx";
 
 import "./Home.css";
 
@@ -12,6 +15,8 @@ import data from "../assets/datafrontiers-2026-scaled.jpg";
 import conciertoPatrimonio from "../assets/concierto-dia-patrimonio.jpg";
 
 function Home() {
+  const [busqueda, setBusqueda] = useState("");
+
   const sedes = [
     "Casa Central Valparaíso",
     "Campus San Joaquín",
@@ -21,36 +26,62 @@ function Home() {
     "Externo",
   ];
   const tipos = ["Presencial", "Online", "Híbrido"];
+  const tematicas = [
+    "Musica",
+    "Congreso",
+    "Operativos",
+    "Educacion",
+    "Charlas",
+  ];
+
+  const [fechaSeleccionada, setFechaSeleccionada] = useState(null);
+
   const [sedesSeleccionadas, setSedesSeleccionadas] = useState(sedes);
   const [tiposSeleccionados, setTiposSeleccionados] = useState(tipos);
+  const [tematicaSeleccionados, setTematicaSeleccionados] = useState(tematicas);
   return (
     <>
+      <Header />
       <section className="banner-eventos">
         <img src={bannerEventos} alt="Banner" className="banner-eventos-img" />
-        <div className="banner-eventos-content">
-          <span className="barra-amarilla"></span>
-          <h1>Eventos</h1>
+        <div className="banner-tools">
+          <form className="banner-search" role="search">
+            <div className="search-box">
+              <input
+                id="buscar-eventos"
+                type="search"
+                placeholder="Buscar por nombre, temática, campus o modalidad"
+              />
+
+              <button type="submit">Buscar</button>
+            </div>
+          </form>
+
+          <div className="mini-calendar">
+            <MiniCalendar
+              fechaSeleccionada={fechaSeleccionada}
+              setFechaSeleccionada={setFechaSeleccionada}
+            />
+          </div>
         </div>
       </section>
-      <section className="filtros-eventos" aria-label="Filtros de eventos">
-        <DropdownCheckbox
-          titulo="Ubicación"
-          etiquetaCantidad="ubicaciones"
-          etiquetaTodos="Todos los emplazamientos"
-          opciones={sedes}
-          seleccionados={sedesSeleccionadas}
-          setSeleccionados={setSedesSeleccionadas}
-        />
 
-        <DropdownCheckbox
-          titulo="Tipo de modalidad"
-          etiquetaCantidad="modalidades"
-          etiquetaTodos="Todas las modalidades"
-          opciones={tipos}
-          seleccionados={tiposSeleccionados}
-          setSeleccionados={setTiposSeleccionados}
-        />
-      </section>
+      <StickyFilters
+        sedes={sedes}
+        tipos={tipos}
+        tematicas={tematicas}
+        sedesSeleccionadas={sedesSeleccionadas}
+        setSedesSeleccionadas={setSedesSeleccionadas}
+        tiposSeleccionados={tiposSeleccionados}
+        setTiposSeleccionados={setTiposSeleccionados}
+        tematicasSeleccionadas={tematicaSeleccionados}
+        setTematicasSeleccionadas={setTematicaSeleccionados}
+        busqueda={busqueda}
+        setBusqueda={setBusqueda}
+        fechaSeleccionada={fechaSeleccionada}
+        setFechaSeleccionada={setFechaSeleccionada}
+      />
+
       <main className="eventos-main">
         <section className="eventos-grid">
           <EventCard
@@ -58,7 +89,7 @@ function Home() {
             title="Ciclo Ensayo PAES 2026"
             date="26-05-2026"
             hora=""
-            ubication="Todos"
+            ubication="Todos los emplazamientos"
             modalidad="Presencial"
             mainTheme="Educación"
           />

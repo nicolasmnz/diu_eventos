@@ -1,0 +1,182 @@
+.date-filter {
+  position: relative;
+  width: 250px;
+}
+
+.date-filter-button {
+  width: 100%;
+  height: 48px;
+
+  background-color: white;
+  border: 2px solid #006b9a;
+  border-radius: 12px;
+
+  padding: 0 16px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  color: #222;
+  font-size: 0.9rem;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
+}
+
+.date-filter-button::after {
+  content: "⌄";
+  color: #006b9a;
+  font-weight: 900;
+}
+
+.date-filter-button:hover {
+  border-color: #002855;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.14);
+  transform: translateY(-2px);
+}
+
+.date-filter-button span {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.date-filter-calendar {
+  position: absolute;
+  top: 58px;
+  right: 0;
+  z-index: 80;
+
+  width: 300px;
+
+  background-color: white;
+  border-radius: 12px;
+  overflow: hidden;
+
+  border-top: 5px solid #f7ae00;
+
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.22);
+}
+
+.date-filter-header {
+  height: 50px;
+  padding: 0 14px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  background-color: #002855;
+  color: white;
+}
+
+.date-filter-header h2 {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.date-filter-header button {
+  width: 30px;
+  height: 30px;
+
+  border: none;
+  border-radius: 999px;
+
+  background-color: rgba(255, 255, 255, 0.14);
+  color: white;
+
+  font-size: 1.1rem;
+  font-weight: 800;
+
+  cursor: pointer;
+}
+
+.date-filter-days,
+.date-filter-dates {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+}
+
+.date-filter-days {
+  background-color: #f7f7f7;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.date-filter-days span {
+  padding: 8px 0;
+
+  text-align: center;
+  color: #006b9a;
+
+  font-size: 0.68rem;
+  font-weight: 800;
+}
+
+.date-filter-dates {
+  gap: 4px;
+  padding: 10px;
+}
+
+.date-filter-date {
+  width: 32px;
+  height: 32px;
+  margin: auto;
+
+  border: 2px solid transparent;
+  border-radius: 999px;
+
+  background-color: transparent;
+  color: #222;
+
+  font-size: 0.78rem;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease,
+    color 0.2s ease,
+    transform 0.2s ease;
+}
+
+.date-filter-date:hover {
+  border-color: #006b9a;
+  transform: translateY(-2px);
+}
+
+.date-filter-date.today {
+  border-color: #f7ae00;
+}
+
+.date-filter-date.selected {
+  background-color: #006b9a;
+  border-color: #006b9a;
+  color: white;
+}
+
+.date-filter-date.today.selected {
+  background-color: #f7ae00;
+  border-color: #f7ae00;
+  color: white;
+}
+
+.date-filter-date.inactive {
+  color: #c9c9c9;
+  cursor: default;
+}
+
+.date-filter-date.inactive:hover {
+  border-color: transparent;
+  background-color: transparent;
+  transform: none;
+}
