@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { ChevronDown } from "lucide-react";
+
 import "./DropdownCheckbox.css";
 
 function DropdownCheckbox({
@@ -59,6 +61,11 @@ function DropdownCheckbox({
         onClick={() => setAbierto(!abierto)}
       >
         <span className="dropdown-button-text">{obtenerTextoBoton()}</span>
+        <ChevronDown
+          size={18}
+          strokeWidth={2.4}
+          className={`dropdown-chevron ${abierto ? "open" : ""}`}
+        />
       </button>
 
       {abierto && (

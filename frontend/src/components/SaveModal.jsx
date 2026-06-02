@@ -2,10 +2,18 @@ import { useEffect } from "react";
 import { createPortal } from "react-dom";
 
 import { FaGoogle, FaMicrosoft } from "react-icons/fa";
+import { CalendarDays, Clock4 } from "lucide-react";
 
 import "./SaveModal.css";
 
-function SaveModal({ abierto, onCerrar, titulo, fechaInicio, ubicacion }) {
+function SaveModal({
+  abierto,
+  onCerrar,
+  titulo,
+  fechaInicio,
+  horaInicio,
+  ubicacion,
+}) {
   //incluir  horaInicio, horaTermino, fechaTermino
   useEffect(() => {
     if (!abierto) return;
@@ -77,6 +85,17 @@ function SaveModal({ abierto, onCerrar, titulo, fechaInicio, ubicacion }) {
           <h2 id="save-modal-title">Guardar evento</h2>
           <p>{titulo}</p>
         </header>
+        <div className="save-modal-resume">
+          <div className="save-modal-resume-item">
+            <CalendarDays size={20} strokeWidth={2.2} />
+            <span>{fechaInicio}</span>
+          </div>
+
+          <div className="save-modal-resume-item">
+            <Clock4 size={20} strokeWidth={2.2} />
+            <span>11:00 AM</span>
+          </div>
+        </div>
         <div className="save-modal-options">
           <button type="button" onClick={abrirGoogleCalendar}>
             <FaGoogle size={30} strokeWidth={2.2} />

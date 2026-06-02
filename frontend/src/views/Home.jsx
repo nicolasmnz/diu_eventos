@@ -1,5 +1,7 @@
 import { useEffect, useMemo, useState } from "react";
-//import DropdownCheckbox from "../components/DropdownCheckbox.jsx";
+
+import { BadgeX, BadgeAlert } from "lucide-react";
+
 import EventCard from "../components/EventCard.jsx";
 import Header from "../components/Header.jsx";
 import MiniCalendar from "../components/MiniCalendar.jsx";
@@ -28,23 +30,6 @@ function fechaEstaEnRango(fechaSeleccionada, fechaInicio, fechaTermino) {
   const termino = fechaTermino || fechaInicio;
 
   return fechaSeleccionada >= fechaInicio && fechaSeleccionada <= termino;
-}
-
-function formatearFechaParaCard(fechaISO) {
-  const [year, month, day] = fechaISO.split("-");
-  return `${day}-${month}-${year}`;
-}
-
-function formatearHora(evento) {
-  if (!evento.horaInicio) {
-    return "";
-  }
-
-  if (evento.horaTermino) {
-    return `${evento.horaInicio} - ${evento.horaTermino}`;
-  }
-
-  return evento.horaInicio;
 }
 
 function Home() {
@@ -207,12 +192,28 @@ function Home() {
       />
 
       <main className="eventos-main">
-        {cargando && <p>Cargando eventos...</p>}
+        {cargando && (
+          <section className="event-status">
+            <p>Cargando eventos...</p>
+          </section>
+        )}
 
-        {error && <p>{error}</p>}
+        {error && (
+          <section className="event-status event-status-error">
+            <BadgeX size={42} strokeWidth={2.2} />
+            <h2>No se pudieron cargar los eventos</h2>
+            <p>{error}</p>
+          </section>
+        )}
 
         {!cargando && !error && eventosFiltrados.length === 0 && (
-          <p>No existen eventos que coincidan con los filtros seleccionados.</p>
+          <section className="event-status event-status-empty">
+            <BadgeAlert size={42} strokeWidth={2.2} />
+            <h2>No hay eventos disponibles</h2>
+            <p>
+              No existen eventos que coincidan con los filtros seleccionados.
+            </p>
+          </section>
         )}
 
         {!cargando && !error && eventosFiltrados.length > 0 && (
@@ -220,10 +221,11 @@ function Home() {
             {eventosFiltrados.map((evento) => (
               <EventCard
                 key={evento.id}
+                id={evento.id}
                 img={evento.imagen}
                 title={evento.nombre}
-                date={formatearFechaParaCard(evento.fechaInicio)}
-                hora={formatearHora(evento)}
+                date={evento.fechaInicio}
+                hora={evento.horaInicio ?? "Por confirmar"}
                 ubication={evento.ubicaciones?.[0] ?? "Sin ubicación"}
                 modalidad={evento.modalidad}
                 mainTheme={evento.tematicas?.[0] ?? "General"}

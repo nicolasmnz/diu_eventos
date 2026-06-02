@@ -1,11 +1,14 @@
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Share2, Bookmark } from "lucide-react";
 
 import ShareModal from "./ShareModal";
-import { useState } from "react";
+import SaveModal from "./SaveModal";
 
 import "./EventCard.css";
 
 function EventCard({
+  id,
   img,
   title,
   date,
@@ -14,12 +17,26 @@ function EventCard({
   modalidad,
   mainTheme,
 }) {
-  /**
-   * Obtiene el nombre corto del mes a partir de una fecha en formato "d/m/yyyy".
-   *
-   * @param {string} fecha - Fecha en formato "día/mes/año", por ejemplo "27/5/2026".
-   * @returns {string} Nombre corto del mes, por ejemplo "may".
-   */
+  function obtenerPartesFecha(fecha) {
+    if (!fecha) {
+      return {
+        year: "",
+        month: "",
+        day: "",
+      };
+    }
+
+    const partes = fecha.split("-");
+
+    if (partes[0].length === 4) {
+      const [year, month, day] = partes;
+      return { year, month, day };
+    }
+
+    const [day, month, year] = partes;
+    return { year, month, day };
+  }
+
   function extraer_mes_corto(fecha) {
     const meses = {
       1: "ene",
@@ -36,16 +53,23 @@ function EventCard({
       12: "dic",
     };
 
-    const partes = fecha.split("-");
-    const mes = Number(partes[1]);
-
-    return meses[mes];
+    const { month } = obtenerPartesFecha(fecha);
+    return meses[Number(month)] ?? "";
   }
 
   function extraer_dia(fecha) {
-    const partes = fecha.split("-");
-    return partes[0];
+    const { day } = obtenerPartesFecha(fecha);
+    return day;
   }
+
+  const [modalCompartirAbierto, setModalCompartirAbierto] = useState(false);
+  const [modalGuardarAbierto, setModalGuardarAbierto] = useState(false);
+
+  const urlCompartir = `${window.location.origin}/eventos/${title
+    .toLowerCase()
+    .replaceAll(" ", "-")}`;
+
+  const navigate = useNavigate();
 
   function obtenerClaseTitulo(title) {
     if (title.length > 70) {
@@ -58,15 +82,8 @@ function EventCard({
 
     return "card-title";
   }
-
-  const [modalCompartirAbierto, setModalCompartirAbierto] = useState(false);
-
-  const urlCompartir = `${window.location.origin}/eventos/${title
-    .toLowerCase()
-    .replaceAll(" ", "-")}`;
-
   return (
-    <article className="card">
+    <article className="card" onClick={() => navigate(`/eventos/${id}`)}>
       <img src={img} className="card-img-top" />
       <time className="card-short-date">
         <span className="month">{extraer_mes_corto(date)}</span>
@@ -89,7 +106,7 @@ function EventCard({
       <footer className="card-footer">
         <div className="card-actions">
           <button
-            ttype="button"
+            type="button"
             className="card-action-button"
             onClick={(event) => {
               event.stopPropagation();
@@ -103,6 +120,10 @@ function EventCard({
           <button
             type="button"
             className="card-action-button"
+            onClick={(event) => {
+              event.stopPropagation();
+              setModalGuardarAbierto(true);
+            }}
             aria-label="Guardar evento"
           >
             <Bookmark size={20} strokeWidth={2.2} />
@@ -115,6 +136,13 @@ function EventCard({
         onCerrar={() => setModalCompartirAbierto(false)}
         titulo={title}
         url={urlCompartir}
+      />
+      <SaveModal
+        abierto={modalGuardarAbierto}
+        onCerrar={() => setModalGuardarAbierto(false)}
+        titulo={title}
+        fechaInicio={date}
+        ubicacion={ubication}
       />
     </article>
   );

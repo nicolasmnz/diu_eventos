@@ -57,15 +57,15 @@
   text-align: left;
 }
 
-.dropdown-button::after {
-  content: "⌄";
+.dropdown-chevron {
   flex-shrink: 0;
-
-  font-size: 1rem;
-  font-weight: 900;
   color: #006b9a;
 
   transition: transform 0.2s ease;
+}
+
+.dropdown-chevron.open {
+  transform: rotate(180deg);
 }
 
 .dropdown-menu {
