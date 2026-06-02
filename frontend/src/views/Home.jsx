@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 //import DropdownCheckbox from "../components/DropdownCheckbox.jsx";
 import EventCard from "../components/EventCard.jsx";
 import Header from "../components/Header.jsx";
@@ -9,49 +9,176 @@ import "./Home.css";
 
 import bannerEventos from "../assets/banner-eventos.jpg";
 
+function obtenerUnicos(lista) {
+  return [...new Set(lista.filter(Boolean))].sort();
+}
+
+function normalizarTexto(texto) {
+  return texto
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
+}
+
+function fechaEstaEnRango(fechaSeleccionada, fechaInicio, fechaTermino) {
+  if (!fechaSeleccionada) {
+    return true;
+  }
+
+  const termino = fechaTermino || fechaInicio;
+
+  return fechaSeleccionada >= fechaInicio && fechaSeleccionada <= termino;
+}
+
+function formatearFechaParaCard(fechaISO) {
+  const [year, month, day] = fechaISO.split("-");
+  return `${day}-${month}-${year}`;
+}
+
+function formatearHora(evento) {
+  if (!evento.horaInicio) {
+    return "";
+  }
+
+  if (evento.horaTermino) {
+    return `${evento.horaInicio} - ${evento.horaTermino}`;
+  }
+
+  return evento.horaInicio;
+}
+
 function Home() {
+  const [eventos, setEventos] = useState([]);
+  const [cargando, setCargando] = useState(true);
+  const [error, setError] = useState(null);
+
   const [busqueda, setBusqueda] = useState("");
-
-  const sedes = [
-    "Casa Central Valparaíso",
-    "Campus San Joaquín",
-    "Campus Vitacura",
-    "Sede Viña del Mar",
-    "Sede Concepción",
-    "Externo",
-  ];
-
-  const tipos = ["Presencial", "Online", "Híbrido"];
-  const tematicas = [
-    "Musica",
-    "Congreso",
-    "Operativos",
-    "Educacion",
-    "Charlas",
-  ];
-
   const [fechaSeleccionada, setFechaSeleccionada] = useState(null);
 
-  const [sedesSeleccionadas, setSedesSeleccionadas] = useState(sedes);
-  const [tiposSeleccionados, setTiposSeleccionados] = useState(tipos);
-  const [tematicaSeleccionados, setTematicaSeleccionados] = useState(tematicas);
+  const sedes = useMemo(
+    () => obtenerUnicos(eventos.flatMap((evento) => evento.ubicaciones ?? [])),
+    [eventos],
+  );
+
+  const tipos = useMemo(
+    () => obtenerUnicos(eventos.map((evento) => evento.modalidad)),
+    [eventos],
+  );
+
+  const tematicas = useMemo(
+    () => obtenerUnicos(eventos.flatMap((evento) => evento.tematicas ?? [])),
+    [eventos],
+  );
+
+  const [sedesSeleccionadas, setSedesSeleccionadas] = useState([]);
+  const [tiposSeleccionados, setTiposSeleccionados] = useState([]);
+  const [tematicaSeleccionados, setTematicaSeleccionados] = useState([]);
+
+  useEffect(() => {
+    async function cargarEventos() {
+      try {
+        const respuesta = await fetch("http://localhost:5000/eventos");
+
+        if (!respuesta.ok) {
+          throw new Error("No se pudieron cargar los eventos.");
+        }
+
+        const data = await respuesta.json();
+        setEventos(data);
+      } catch (error) {
+        setError(error.message);
+      } finally {
+        setCargando(false);
+      }
+    }
+
+    cargarEventos();
+  }, []);
+
+  useEffect(() => {
+    if (eventos.length === 0) {
+      return;
+    }
+
+    setSedesSeleccionadas(sedes);
+    setTiposSeleccionados(tipos);
+    setTematicaSeleccionados(tematicas);
+  }, [eventos, sedes, tipos, tematicas]);
+
+  const eventosFiltrados = eventos.filter((evento) => {
+    const textoEvento = normalizarTexto(`
+    ${evento.nombre}
+    ${evento.descripcion}
+    ${evento.lugar ?? ""}
+    ${evento.modalidad}
+    ${(evento.ubicaciones ?? []).join(" ")}
+    ${(evento.tematicas ?? []).join(" ")}
+  `);
+
+    const coincideBusqueda = textoEvento.includes(normalizarTexto(busqueda));
+
+    const coincideSede =
+      (evento.ubicaciones ?? []).includes("Todos") ||
+      (evento.ubicaciones ?? []).some((ubicacion) =>
+        sedesSeleccionadas.includes(ubicacion),
+      );
+
+    const coincideModalidad = tiposSeleccionados.includes(evento.modalidad);
+
+    const coincideTematica = (evento.tematicas ?? []).some((tematica) =>
+      tematicaSeleccionados.includes(tematica),
+    );
+
+    const coincideFecha = fechaEstaEnRango(
+      fechaSeleccionada,
+      evento.fechaInicio,
+      evento.fechaTermino,
+    );
+
+    return (
+      coincideBusqueda &&
+      coincideSede &&
+      coincideModalidad &&
+      coincideTematica &&
+      coincideFecha
+    );
+  });
+
+  function limpiarFiltros() {
+    setBusqueda("");
+    setFechaSeleccionada(null);
+
+    setSedesSeleccionadas(sedes);
+    setTiposSeleccionados(tipos);
+    setTematicaSeleccionados(tematicas);
+  }
   return (
     <>
       <Header />
+
       <section className="banner-eventos">
         <img src={bannerEventos} alt="Banner" className="banner-eventos-img" />
-        <div className="banner-tools">
-          <form className="banner-search" role="search">
-            <div className="search-box">
-              <input
-                id="buscar-eventos"
-                type="search"
-                placeholder="Buscar por nombre, temática, campus o modalidad"
-              />
 
-              <button type="submit">Buscar</button>
-            </div>
-          </form>
+        <div className="banner-tools">
+          <div className="banner-left-tools">
+            <form
+              className="banner-search"
+              role="search"
+              onSubmit={(event) => event.preventDefault()}
+            >
+              <div className="search-box">
+                <input
+                  id="buscar-eventos"
+                  type="search"
+                  placeholder="Buscar por nombre, temática, campus o modalidad"
+                  value={busqueda}
+                  onChange={(event) => setBusqueda(event.target.value)}
+                />
+
+                <button type="submit">Buscar</button>
+              </div>
+            </form>
+          </div>
 
           <div className="mini-calendar">
             <MiniCalendar
@@ -76,6 +203,7 @@ function Home() {
         setBusqueda={setBusqueda}
         fechaSeleccionada={fechaSeleccionada}
         setFechaSeleccionada={setFechaSeleccionada}
+        onLimpiarFiltros={limpiarFiltros}
       />
 
       <main className="eventos-main">
@@ -87,44 +215,22 @@ function Home() {
           <p>No existen eventos que coincidan con los filtros seleccionados.</p>
         )}
 
-        <section className="eventos-grid">
-          <EventCard
-            img={PAES}
-            title="Ciclo Ensayo PAES 2026"
-            date="26-05-2026"
-            hora=""
-            ubication="Todos los emplazamientos"
-            modalidad="Presencial"
-            mainTheme="Educación"
-          />
-          <EventCard
-            img={vivienda}
-            title="Feria de la vivienda"
-            date="02-06-2026"
-            hora="11:00 AM"
-            ubication="Sede Viña del Mar"
-            modalidad="Presencial"
-            mainTheme="Operativos"
-          />
-          <EventCard
-            img={data}
-            title="Data Science International Congress Data Frontiers"
-            date="30-05-2026"
-            hora="08:30 AM"
-            ubication="Campus San Joaquín"
-            modalidad="Presencial"
-            mainTheme="Congreso"
-          />
-          <EventCard
-            img={conciertoPatrimonio}
-            title="Concierto Día del Patrimonio, músicas del mundo Congress Data Frontiers "
-            date="31-05-2026"
-            hora="12:30 PM"
-            ubication="Externo"
-            modalidad="Presencial"
-            mainTheme="Música"
-          />
-        </section>
+        {!cargando && !error && eventosFiltrados.length > 0 && (
+          <section className="eventos-grid">
+            {eventosFiltrados.map((evento) => (
+              <EventCard
+                key={evento.id}
+                img={evento.imagen}
+                title={evento.nombre}
+                date={formatearFechaParaCard(evento.fechaInicio)}
+                hora={formatearHora(evento)}
+                ubication={evento.ubicaciones?.[0] ?? "Sin ubicación"}
+                modalidad={evento.modalidad}
+                mainTheme={evento.tematicas?.[0] ?? "General"}
+              />
+            ))}
+          </section>
+        )}
       </main>
     </>
   );

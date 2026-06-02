@@ -1,8 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import "./StickyFilters.css";
+import { FunnelX } from "lucide-react";
 
 import DropdownCheckbox from "./DropdownCheckbox.jsx";
 import DateFilter from "./DateFilter.jsx";
+
+import "./StickyFilters.css";
 
 function StickyFilters({
   sedes,
@@ -23,6 +25,8 @@ function StickyFilters({
 
   busqueda,
   setBusqueda,
+
+  onLimpiarFiltros,
 }) {
   const sentinelRef = useRef(null);
   const [modoSticky, setModoSticky] = useState(false);
@@ -51,10 +55,14 @@ function StickyFilters({
         aria-label="Filtros de eventos"
       >
         {modoSticky && (
-          <form className="event-filters-search" role="search">
+          <form
+            className="event-filters-search"
+            role="search"
+            onSubmit={(event) => event.preventDefault()}
+          >
             <input
               type="search"
-              placeholder="Buscar eventos..."
+              placeholder="Buscar por nombre, temática, campus o modalidad"
               value={busqueda}
               onChange={(event) => setBusqueda(event.target.value)}
             />
@@ -95,6 +103,14 @@ function StickyFilters({
               setFechaSeleccionada={setFechaSeleccionada}
             />
           )}
+
+          <button
+            type="button"
+            className="clear-filters-button"
+            onClick={onLimpiarFiltros}
+          >
+            <FunnelX />
+          </button>
         </div>
       </section>
     </>

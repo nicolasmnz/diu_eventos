@@ -19,3 +19,26 @@ select,
 textarea {
   font-family: inherit;
 }
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  overflow-x: hidden;
+}
+
+:root {
+  --page-max-width: 1250px;
+  --page-gutter: 24px;
+  --page-width: min(
+    var(--page-max-width),
+    calc(100vw - 2 * var(--page-gutter))
+  );
+  --page-x: max(var(--page-gutter), calc((100vw - var(--page-max-width)) / 2));
+}

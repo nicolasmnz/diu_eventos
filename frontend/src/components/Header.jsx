@@ -6,23 +6,30 @@ function Header() {
   return (
     <header className="site-header">
       <section className="top-bar">
-        <a href="/" className="top-logo">
-          USM.cl
-        </a>
+        <div className="header-inner">
+          <a href="/" className="top-logo">
+            USM.cl
+          </a>
+        </div>
       </section>
 
       <section className="main-header">
-        <a href="/" className="brand">
-          <span className="brand-logo-crop">
-            <img src={logoUSM} alt="Universidad Técnica Federico Santa María" />
-          </span>
-        </a>
+        <div className="header-inner main-header-inner">
+          <a href="/" className="brand">
+            <span className="brand-logo-crop">
+              <img
+                src={logoUSM}
+                alt="Universidad Técnica Federico Santa María"
+              />
+            </span>
+          </a>
 
-        <span className="header-divider"></span>
+          <span className="header-divider"></span>
 
-        <section className="header-section-title" aria-label="Seccion actual">
-          <h1>EVENTOS</h1>
-        </section>
+          <section className="header-section-title" aria-label="Seccion actual">
+            <h1>EVENTOS</h1>
+          </section>
+        </div>
       </section>
     </header>
   );

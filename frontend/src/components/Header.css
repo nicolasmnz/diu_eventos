@@ -4,12 +4,15 @@
   user-select: none;
 }
 
+.header-inner {
+  width: var(--page-width);
+  margin: 0 auto;
+}
+
 .top-bar {
   height: 42px;
-  padding: 0 76px;
 
   display: flex;
-  justify-content: flex-start;
   align-items: center;
 
   background-color: #005984;
@@ -17,11 +20,16 @@
 }
 
 .top-logo {
+  display: inline-flex;
+  width: fit-content;
+
   color: white;
   font-family: "Times New Roman", Times, serif;
   font-weight: 700;
   font-size: 1.1rem;
   text-decoration: none;
+
+  cursor: pointer;
 }
 
 .top-logo:hover {
@@ -31,13 +39,17 @@
 
 .main-header {
   height: 100px;
-  padding: 0 76px;
 
   display: flex;
   align-items: center;
-  gap: 10px;
 
   background-color: white;
+}
+
+.main-header-inner {
+  display: flex;
+  align-items: center;
+  gap: 10px;
 }
 
 .brand {
@@ -46,7 +58,6 @@
   text-decoration: none;
 }
 
-/* Área de reserva del logo institucional */
 .brand-logo-crop {
   width: 350px;
   height: 96px;
@@ -56,32 +67,33 @@
   align-items: center;
 }
 
-/* Control real del tamaño del logo */
 .brand-logo-crop img {
   width: 455px;
   height: auto;
   display: block;
+
+  transform: translateX(-110px);
 }
 
 .header-divider {
-  margin-top: 5px;
   width: 1px;
   height: 47px;
   background-color: #d6d6d6;
+  transform: translate(-112px, 3px);
 }
 
 .header-section-title {
   display: flex;
   align-items: center;
+  transform: translate(-120px, 3px);
 }
 
 .header-section-title h1 {
-  margin-left: 5px;
-  margin-top: 18px;
+  margin: 0 0 0 12px;
+
   font-family: "Roboto Condensed", Arial, sans-serif;
   font-size: 0.98rem;
   font-weight: 200;
-  line-height: 100;
 
   color: #9a999e;
   text-transform: uppercase;
