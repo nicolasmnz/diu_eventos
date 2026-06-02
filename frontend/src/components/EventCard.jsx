@@ -1,5 +1,8 @@
 import { Share2, Bookmark } from "lucide-react";
 
+import ShareModal from "./ShareModal";
+import { useState } from "react";
+
 import "./EventCard.css";
 
 function EventCard({
@@ -56,6 +59,12 @@ function EventCard({
     return "card-title";
   }
 
+  const [modalCompartirAbierto, setModalCompartirAbierto] = useState(false);
+
+  const urlCompartir = `${window.location.origin}/eventos/${title
+    .toLowerCase()
+    .replaceAll(" ", "-")}`;
+
   return (
     <article className="card">
       <img src={img} className="card-img-top" />
@@ -80,8 +89,12 @@ function EventCard({
       <footer className="card-footer">
         <div className="card-actions">
           <button
-            type="button"
+            ttype="button"
             className="card-action-button"
+            onClick={(event) => {
+              event.stopPropagation();
+              setModalCompartirAbierto(true);
+            }}
             aria-label="Compartir evento"
           >
             <Share2 size={20} strokeWidth={2.2} />
@@ -96,6 +109,13 @@ function EventCard({
           </button>
         </div>
       </footer>
+
+      <ShareModal
+        abierto={modalCompartirAbierto}
+        onCerrar={() => setModalCompartirAbierto(false)}
+        titulo={title}
+        url={urlCompartir}
+      />
     </article>
   );
 }
