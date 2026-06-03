@@ -27,6 +27,7 @@ function StickyFilters({
   setBusqueda,
 
   onLimpiarFiltros,
+  mostrarSeleccionRestaurada,
 }) {
   const sentinelRef = useRef(null);
   const [modoSticky, setModoSticky] = useState(false);
@@ -77,6 +78,7 @@ function StickyFilters({
             opciones={sedes}
             seleccionados={sedesSeleccionadas}
             setSeleccionados={setSedesSeleccionadas}
+            mostrarSeleccionRestaurada={mostrarSeleccionRestaurada}
           />
 
           <DropdownCheckbox
@@ -86,6 +88,7 @@ function StickyFilters({
             opciones={tipos}
             seleccionados={tiposSeleccionados}
             setSeleccionados={setTiposSeleccionados}
+            mostrarSeleccionRestaurada={mostrarSeleccionRestaurada}
           />
 
           <DropdownCheckbox
@@ -95,6 +98,7 @@ function StickyFilters({
             opciones={tematicas}
             seleccionados={tematicasSeleccionadas}
             setSeleccionados={setTematicasSeleccionadas}
+            mostrarSeleccionRestaurada={mostrarSeleccionRestaurada}
           />
 
           {modoSticky && (

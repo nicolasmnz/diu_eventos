@@ -87,16 +87,18 @@
 
 .dropdown-item {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 12px;
 
   padding: 10px 8px;
   border-radius: 8px;
 
   color: #1f2933;
-  font-size: 0.9rem;
-  font-weight: 600;
-  white-space: nowrap;
+  font-size: 0.86rem;
+  font-weight: 700;
+  line-height: 1.35;
+
+  white-space: normal;
 
   cursor: pointer;
 
@@ -105,24 +107,27 @@
     color 0.2s ease;
 }
 
-.dropdown-item:hover {
-  background-color: #f2f6f8;
-  color: #006b9a;
+.dropdown-item span {
+  flex: 1;
+  min-width: 0;
+
+  line-height: 1.35;
 }
 
 .dropdown-item input {
+  flex-shrink: 0;
+
   width: 18px;
   height: 18px;
+  margin-top: 1px;
+
   accent-color: #006b9a;
   cursor: pointer;
 }
 
-.dropdown-item span {
-  line-height: 1;
-}
-
 .dropdown-item-todos {
-  font-weight: 800;
+  font-size: 0.86rem;
+  font-weight: 700;
   color: #002855;
 }
 

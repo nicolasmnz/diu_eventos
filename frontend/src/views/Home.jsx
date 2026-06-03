@@ -41,7 +41,12 @@ function Home() {
   const [fechaSeleccionada, setFechaSeleccionada] = useState(null);
 
   const sedes = useMemo(
-    () => obtenerUnicos(eventos.flatMap((evento) => evento.ubicaciones ?? [])),
+    () =>
+      obtenerUnicos(
+        eventos
+          .flatMap((evento) => evento.ubicaciones ?? [])
+          .filter((ubicacion) => ubicacion !== "Todos"),
+      ),
     [eventos],
   );
 
@@ -58,6 +63,9 @@ function Home() {
   const [sedesSeleccionadas, setSedesSeleccionadas] = useState([]);
   const [tiposSeleccionados, setTiposSeleccionados] = useState([]);
   const [tematicaSeleccionados, setTematicaSeleccionados] = useState([]);
+
+  const [homeStateListo, setHomeStateListo] = useState(false);
+  const [homeRestaurado, setHomeRestaurado] = useState(false);
 
   useEffect(() => {
     async function cargarEventos() {
@@ -81,14 +89,44 @@ function Home() {
   }, []);
 
   useEffect(() => {
-    if (eventos.length === 0) {
-      return;
+    if (eventos.length === 0) return;
+
+    const debeRestaurar =
+      sessionStorage.getItem("restaurarHomeEventos") === "true";
+
+    const estadoGuardado = sessionStorage.getItem("homeEventosState");
+
+    if (debeRestaurar && estadoGuardado) {
+      try {
+        const estado = JSON.parse(estadoGuardado);
+
+        setBusqueda(estado.busqueda ?? "");
+        setFechaSeleccionada(estado.fechaSeleccionada ?? null);
+
+        setSedesSeleccionadas(estado.sedesSeleccionadas ?? sedes);
+        setTiposSeleccionados(estado.tiposSeleccionados ?? tipos);
+        setTematicaSeleccionados(estado.tematicaSeleccionados ?? tematicas);
+        setHomeRestaurado(true);
+
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            window.scrollTo(0, estado.scrollY ?? 0);
+          });
+        });
+
+        sessionStorage.removeItem("restaurarHomeEventos");
+
+        return;
+      } catch {
+        sessionStorage.removeItem("homeEventosState");
+        sessionStorage.removeItem("restaurarHomeEventos");
+      }
     }
 
     setSedesSeleccionadas(sedes);
     setTiposSeleccionados(tipos);
     setTematicaSeleccionados(tematicas);
-  }, [eventos, sedes, tipos, tematicas]);
+  }, [eventos.length, sedes, tipos, tematicas]);
 
   const eventosFiltrados = eventos.filter((evento) => {
     const textoEvento = normalizarTexto(`
@@ -137,6 +175,82 @@ function Home() {
     setTiposSeleccionados(tipos);
     setTematicaSeleccionados(tematicas);
   }
+
+  function guardarEstadoHome() {
+    sessionStorage.setItem("restaurarHomeEventos", "true");
+
+    sessionStorage.setItem(
+      "homeEventosState",
+      JSON.stringify({
+        busqueda,
+        fechaSeleccionada,
+        sedesSeleccionadas,
+        tiposSeleccionados,
+        tematicaSeleccionados,
+        scrollY: window.scrollY,
+      }),
+    );
+  }
+
+  useEffect(() => {
+    if (eventos.length === 0) return;
+
+    const estadoGuardado = sessionStorage.getItem("homeEventosState");
+
+    if (estadoGuardado) {
+      try {
+        const estado = JSON.parse(estadoGuardado);
+
+        setBusqueda(estado.busqueda ?? "");
+        setSedesSeleccionadas(estado.sedesSeleccionadas ?? sedes);
+        setTiposSeleccionados(estado.tiposSeleccionados ?? tipos);
+        setTematicaSeleccionados(estado.tematicaSeleccionados ?? tematicas);
+        setFechaSeleccionada(estado.fechaSeleccionada ?? null);
+
+        setTimeout(() => {
+          window.scrollTo(0, estado.scrollY ?? 0);
+        }, 0);
+
+        return;
+      } catch {
+        sessionStorage.removeItem("homeEventosState");
+      }
+    }
+
+    setSedesSeleccionadas(sedes);
+    setTiposSeleccionados(tipos);
+    setTematicaSeleccionados(tematicas);
+  }, [eventos.length, sedes, tipos, tematicas]);
+
+  useEffect(() => {
+    if (!homeStateListo) return;
+
+    const guardarEstado = () => {
+      sessionStorage.setItem(
+        "homeEventosState",
+        JSON.stringify({
+          busqueda,
+          sedesSeleccionadas,
+          tiposSeleccionados,
+          tematicaSeleccionados,
+          fechaSeleccionada,
+          scrollY: window.scrollY,
+        }),
+      );
+    };
+
+    window.addEventListener("scroll", guardarEstado);
+    guardarEstado();
+
+    return () => window.removeEventListener("scroll", guardarEstado);
+  }, [
+    homeStateListo,
+    busqueda,
+    sedesSeleccionadas,
+    tiposSeleccionados,
+    tematicaSeleccionados,
+    fechaSeleccionada,
+  ]);
   return (
     <>
       <Header />
@@ -189,6 +303,7 @@ function Home() {
         fechaSeleccionada={fechaSeleccionada}
         setFechaSeleccionada={setFechaSeleccionada}
         onLimpiarFiltros={limpiarFiltros}
+        mostrarSeleccionRestaurada={homeRestaurado}
       />
 
       <main className="eventos-main">
@@ -221,14 +336,8 @@ function Home() {
             {eventosFiltrados.map((evento) => (
               <EventCard
                 key={evento.id}
-                id={evento.id}
-                img={evento.imagen}
-                title={evento.nombre}
-                date={evento.fechaInicio}
-                hora={evento.horaInicio ?? "Por confirmar"}
-                ubication={evento.ubicaciones?.[0] ?? "Sin ubicación"}
-                modalidad={evento.modalidad}
-                mainTheme={evento.tematicas?.[0] ?? "General"}
+                evento={evento}
+                onAntesAbrirDetalle={guardarEstadoHome}
               />
             ))}
           </section>

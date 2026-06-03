@@ -17,7 +17,7 @@ import SaveModal from "../components/SaveModal";
 import "./EventDetails.css";
 
 function EventDetails() {
-  const { id } = useParams();
+  const { slug } = useParams();
 
   const [evento, setEvento] = useState(null);
   const [cargando, setCargando] = useState(true);
@@ -26,10 +26,48 @@ function EventDetails() {
   const [modalCompartirAbierto, setModalCompartirAbierto] = useState(false);
   const [modalGuardarAbierto, setModalGuardarAbierto] = useState(false);
 
+  function formatearFechaVista(fecha) {
+    if (!fecha) return "Fecha por confirmar";
+
+    return new Intl.DateTimeFormat("es-CL", {
+      weekday: "long",
+      day: "numeric",
+      month: "long",
+      year: "numeric",
+      timeZone: calendario.zonaHoraria ?? "America/Santiago",
+    }).format(new Date(`${fecha}T12:00:00`));
+  }
+
+  function obtenerTextoFecha() {
+    if (calendario.fechaInicio === calendario.fechaTermino) {
+      return formatearFechaVista(calendario.fechaInicio);
+    }
+
+    return `${formatearFechaVista(calendario.fechaInicio)} - ${formatearFechaVista(
+      calendario.fechaTermino,
+    )}`;
+  }
+
+  function obtenerTextoHora() {
+    if (calendario.todoElDia) {
+      return "Todo el día";
+    }
+
+    if (calendario.horaInicio && calendario.horaTermino) {
+      return `${calendario.horaInicio} - ${calendario.horaTermino}`;
+    }
+
+    if (calendario.horaInicio) {
+      return `Desde ${calendario.horaInicio}`;
+    }
+
+    return "Horario por confirmar";
+  }
+
   useEffect(() => {
     async function cargarEvento() {
       try {
-        const respuesta = await fetch(`http://localhost:5000/eventos/${id}`);
+        const respuesta = await fetch(`http://localhost:5000/eventos/${slug}`);
 
         if (!respuesta.ok) {
           throw new Error("No se pudo cargar el evento.");
@@ -45,13 +83,14 @@ function EventDetails() {
     }
 
     cargarEvento();
-  }, [id]);
+  }, [slug]);
 
   if (cargando) return <p>Cargando evento...</p>;
   if (error) return <p>{error}</p>;
   if (!evento) return <p>Evento no encontrado.</p>;
 
-  const urlCompartir = `${window.location.origin}/eventos/${evento.id}`;
+  const calendario = evento.calendario;
+  const urlCompartir = `${window.location.origin}${evento.ruta}`;
 
   return (
     <>
@@ -103,24 +142,24 @@ function EventDetails() {
           <aside className="event-details">
             <div className="event-detail-item">
               <CalendarDays size={22} strokeWidth={2.2} />
-              <span>Wednesday, June 3, 2026</span>
+              <span>{obtenerTextoFecha()}</span>
             </div>
 
             <div className="event-detail-item">
               <Clock4 size={22} strokeWidth={2.2} />
-              <span>11:00 AM</span>
+              <span>{obtenerTextoHora()}</span>
             </div>
 
             <div className="event-detail-item">
               <MapPin size={22} strokeWidth={2.2} />
-              <span>Sala A16</span>
+              <span>{calendario.ubicacion}</span>
             </div>
 
             <div className="event-detail-item">
               <Users size={22} strokeWidth={2.2} />
               <div>
                 <strong>Evento abierto a:</strong>
-                <p>Estudiantes, Profesores, Funcionarios, Alumni</p>
+                <p>{evento.publicoObjetivo}</p>
               </div>
             </div>
           </aside>
@@ -160,11 +199,7 @@ function EventDetails() {
           <SaveModal
             abierto={modalGuardarAbierto}
             onCerrar={() => setModalGuardarAbierto(false)}
-            titulo={evento.nombre}
-            fechaInicio={evento.fechaInicio}
-            ubicacion={
-              evento.ubicaciones?.join(", ") ?? evento.lugar ?? "Sin ubicación"
-            }
+            calendario={calendario}
           />
         </section>
       </main>
