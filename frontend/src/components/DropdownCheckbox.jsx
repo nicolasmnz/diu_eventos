@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { ChevronDown } from "lucide-react";
 
 import "./DropdownCheckbox.css";
@@ -10,6 +10,7 @@ function DropdownCheckbox({
   opciones,
   seleccionados,
   setSeleccionados,
+  mostrarSeleccionRestaurada = false,
 }) {
   const [abierto, setAbierto] = useState(false);
   const [interactuado, setInteractuado] = useState(false);
@@ -51,6 +52,12 @@ function DropdownCheckbox({
 
     return `${seleccionados.length} ${etiquetaCantidad} seleccionadas`;
   }
+
+  useEffect(() => {
+    if (mostrarSeleccionRestaurada) {
+      setInteractuado(true);
+    }
+  }, [mostrarSeleccionRestaurada]);
 
   return (
     <fieldset className="dropdown">

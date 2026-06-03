@@ -8,15 +8,31 @@
     "fechaTermino": "2026-10-17",
     "horaInicio": null,
     "horaTermino": null,
-    "publicoObjetivo": "Abierto",
+    "publicoObjetivo": "Todo público",
     "modalidad": "Presencial",
-    "ubicaciones": [
-      "Todos"
+    "ubicaciones": ["Todos"],
+    "lugar": [
+      "Campus Campus Casa Central Valparaíso",
+      "Campus San Joaquín",
+      "Campus Vitacura",
+      "Sede Viña del Mar",
+      "Sede Concepción"
     ],
-    "lugar": "Todos los campus y sedes USM",
-    "tematicas": [
-      "Docencia"
-    ]
+    "tematicas": ["Docencia"],
+    "calendario": {
+      "zonaHoraria": "America/Santiago",
+      "todoElDia": true,
+      "fechaInicio": "2026-05-16",
+      "fechaTermino": "2026-10-17",
+      "horaInicio": null,
+      "horaTermino": null,
+      "duracionMinutosSugerida": null,
+      "ubicacion": "Campus Casa Central Valparaíso, Campus San Joaquín, Campus Vitacura, Sede Viña del Mar, Sede Concepción",
+      "titulo": "Ciclo de Ensayos PAES 2026",
+      "descripcion": "La Universidad Técnica Federico Santa María, a través de su Dirección de Admisión, les invita cordialmente a participar en el Ciclo de Ensayos PAES 2026. Las fechas y lugares son los siguientes: 16 de mayo: primer Ensayo – Competencia Matemática M1 y M2. Campus y sedes USM."
+    },
+    "ruta": "/eventos/ciclo-de-ensayos-paes-2026",
+    "slug": "ciclo-de-ensayos-paes-2026"
   },
   {
     "id": 2,
@@ -27,16 +43,28 @@
     "fechaTermino": "2026-05-31",
     "horaInicio": "08:30",
     "horaTermino": null,
-    "publicoObjetivo": "Abierto",
+    "publicoObjetivo": "Todo público",
     "modalidad": "Presencial",
-    "ubicaciones": [
-      "Casa Central Valparaíso",
-      "Externo"
+    "ubicaciones": ["Campus Casa Central Valparaíso", "Externo"],
+    "lugar": [
+      "Campus Casa Central Valparaíso",
+      "Edificio Federico Santa María"
     ],
-    "lugar": "Campus Casa Central Valparaíso y Edificio Federico Santa María",
-    "tematicas": [
-      "Cultura"
-    ]
+    "tematicas": ["Cultura"],
+    "calendario": {
+      "zonaHoraria": "America/Santiago",
+      "todoElDia": true,
+      "fechaInicio": "2026-05-31",
+      "fechaTermino": "2026-05-31",
+      "horaInicio": "08:30",
+      "horaTermino": null,
+      "duracionMinutosSugerida": null,
+      "ubicacion": "Campus Casa Central Valparaíso, Edificio Federico Santa María",
+      "titulo": "Día del Patrimonio 2026",
+      "descripcion": "La Universidad Técnica Federico Santa María les invita cordialmente a participar del Día del Patrimonio 2026."
+    },
+    "ruta": "/eventos/dia-del-patrimonio-2026",
+    "slug": "dia-del-patrimonio-2026"
   },
   {
     "id": 3,
@@ -47,15 +75,25 @@
     "fechaTermino": "2026-05-31",
     "horaInicio": "12:30",
     "horaTermino": null,
-    "publicoObjetivo": "Abierto",
+    "publicoObjetivo": "Todo público",
     "modalidad": "Presencial",
-    "ubicaciones": [
-      "Externo"
-    ],
-    "lugar": "Edificio Federico Santa María",
-    "tematicas": [
-      "Cultura"
-    ]
+    "ubicaciones": ["Externo"],
+    "lugar": ["Edificio Federico Santa María"],
+    "tematicas": ["Cultura"],
+    "calendario": {
+      "zonaHoraria": "America/Santiago",
+      "todoElDia": false,
+      "fechaInicio": "2026-05-31",
+      "fechaTermino": "2026-05-31",
+      "horaInicio": "12:30",
+      "horaTermino": null,
+      "duracionMinutosSugerida": 60,
+      "ubicacion": "Edificio Federico Santa María",
+      "titulo": "Concierto “Día del Patrimonio, músicas del mundo”",
+      "descripcion": "La Universidad Técnica Federico Santa María les invita cordialmente a participar del concierto \"Día del Patrimonio, músicas del mundo\", que interpretará el Coro de Cámara USM. Esta actividad se realizará el 31 de mayo, a las 12:30 horas, en el Edificio Federico Santa María. Más información en el programa del concierto."
+    },
+    "ruta": "/eventos/concierto-dia-del-patrimonio-musicas-del-mundo",
+    "slug": "concierto-dia-del-patrimonio-musicas-del-mundo"
   },
   {
     "id": 4,
@@ -68,14 +106,23 @@
     "horaTermino": "14:00",
     "publicoObjetivo": "Estudiantes y titulados",
     "modalidad": "Presencial",
-    "ubicaciones": [
-      "Sede Viña del Mar"
-    ],
-    "lugar": "Terraza edificio P",
-    "tematicas": [
-      "Trabajo",
-      "Empleabilidad"
-    ]
+    "ubicaciones": ["Sede Viña del Mar"],
+    "lugar": ["Sede Viña del Mar"],
+    "tematicas": ["Trabajo", "Empleabilidad"],
+    "calendario": {
+      "zonaHoraria": "America/Santiago",
+      "todoElDia": false,
+      "fechaInicio": "2026-06-02",
+      "fechaTermino": "2026-06-02",
+      "horaInicio": "10:30",
+      "horaTermino": "14:00",
+      "duracionMinutosSugerida": null,
+      "ubicacion": "Sede Viña del Mar",
+      "titulo": "Jornada Empresarial 2026",
+      "descripcion": "La Universidad Técnica Federico Santa María, Sede Viña del Mar, a través de su Oficina de Gestión de Talentos y Empleabilidad (GESTAL) de la Dirección de Vinculación con el Medio, invita cordialmente a estudiantes y titulados a participar en la Jornada Empresarial 2026. Esta instancia tiene como objetivo generar un espacio de encuentro entre la comunidad universitaria y destacadas empresas, permitiendo conocer oportunidades laborales, procesos de selección y recibir orientación profesional especializada. Durante la jornada, las y los asistentes podrán conocer empresas participantes y revisar sus procesos de selección activos; recibir información sobre GESTAL y orientación para la revisión y mejora de currículum vitae; y acceder a orientación laboral y conocer el funcionamiento del Portal de Empleos junto a especialistas de Trabajando.com. Además, se realizarán sorteos de premios entre quienes participen en la jornada."
+    },
+    "ruta": "/eventos/jornada-empresarial-2026",
+    "slug": "jornada-empresarial-2026"
   },
   {
     "id": 5,
@@ -86,16 +133,25 @@
     "fechaTermino": "2026-06-02",
     "horaInicio": "12:30",
     "horaTermino": null,
-    "publicoObjetivo": "Abierto",
+    "publicoObjetivo": "Todo público",
     "modalidad": "Presencial",
-    "ubicaciones": [
-      "Campus Vitacura"
-    ],
-    "lugar": "Auditorio Belloto 1",
-    "tematicas": [
-      "Ingeniería",
-      "Charla"
-    ]
+    "ubicaciones": ["Campus Vitacura"],
+    "lugar": ["Campus Vitacura"],
+    "tematicas": ["Ingeniería", "Charla"],
+    "calendario": {
+      "zonaHoraria": "America/Santiago",
+      "todoElDia": false,
+      "fechaInicio": "2026-06-02",
+      "fechaTermino": "2026-06-02",
+      "horaInicio": "12:30",
+      "horaTermino": null,
+      "duracionMinutosSugerida": 60,
+      "ubicacion": "Auditorio Belloto 1",
+      "titulo": "Charla “Mirada Actual y a Futuro de la Gestión de Activos”",
+      "descripcion": "La Universidad Técnica Federico Santa María, a través de su Departamento de Industrias, les invita cordialmente a participar de la charla “Mirada Actual y a Futuro de la Gestión de Activos”, instancia en la cual la Gerencia Corporativa de Mantenimiento de la empresa estatal cuprífera presentará los desafíos de la gestión de activos en minería y los programas de atracción temprana de la compañía, a través de los cuales las y los estudiantes y titulados de Ingeniería de la USM pueden impulsar el progreso del país y la organización."
+    },
+    "ruta": "/eventos/charla-mirada-actual-y-a-futuro-de-la-gestion-de-activos",
+    "slug": "charla-mirada-actual-y-a-futuro-de-la-gestion-de-activos"
   },
   {
     "id": 6,
@@ -106,16 +162,25 @@
     "fechaTermino": "2026-06-02",
     "horaInicio": "11:00",
     "horaTermino": "12:00",
-    "publicoObjetivo": "Abierto",
+    "publicoObjetivo": "Todo público",
     "modalidad": "Online",
-    "ubicaciones": [
-      "Online"
-    ],
-    "lugar": null,
-    "tematicas": [
-      "Charla",
-      "Inclusión"
-    ]
+    "ubicaciones": ["Online"],
+    "lugar": ["Online"],
+    "tematicas": ["Charla", "Inclusión"],
+    "calendario": {
+      "zonaHoraria": "America/Santiago",
+      "todoElDia": false,
+      "fechaInicio": "2026-06-02",
+      "fechaTermino": "2026-06-02",
+      "horaInicio": "11:00",
+      "horaTermino": "12:00",
+      "duracionMinutosSugerida": null,
+      "ubicacion": "Online",
+      "titulo": "Charla “Inclusión Laboral y Obtención de Credencial de Discapacidad”",
+      "descripcion": "La Dirección de Gestión y Desarrollo de Personas, a través de la Unidad de Inclusión Laboral de la Universidad Técnica Federico Santa María, tiene el agrado de invitar a toda la comunidad universitaria a participar en la charla “Inclusión Laboral y Obtención de Credencial de Discapacidad”."
+    },
+    "ruta": "/eventos/charla-inclusion-laboral-y-obtencion-de-credencial-de-discapacidad",
+    "slug": "charla-inclusion-laboral-y-obtencion-de-credencial-de-discapacidad"
   },
   {
     "id": 7,
@@ -128,13 +193,23 @@
     "horaTermino": "14:00",
     "publicoObjetivo": "Profesores y funcionarios",
     "modalidad": "Presencial",
-    "ubicaciones": [
-      "Sede Viña del Mar"
-    ],
-    "lugar": null,
-    "tematicas": [
-      "Beneficios"
-    ]
+    "ubicaciones": ["Sede Viña del Mar"],
+    "lugar": ["Sede Viña del Mar"],
+    "tematicas": ["Beneficios"],
+    "calendario": {
+      "zonaHoraria": "America/Santiago",
+      "todoElDia": false,
+      "fechaInicio": "2026-06-02",
+      "fechaTermino": "2026-06-02",
+      "horaInicio": "11:00",
+      "horaTermino": "14:00",
+      "duracionMinutosSugerida": null,
+      "ubicacion": "Patio Central",
+      "titulo": "Feria de la vivienda en Sede Viña del Mar",
+      "descripcion": "La Universidad Técnica Federico Santa María, Sede Viña del Mar, a través de su Dirección de Gestión y Desarrollo de Personas, tiene el agrado de invitar cordialmente a profesores y funcionarios a participar de la Feria de la Vivienda."
+    },
+    "ruta": "/eventos/feria-de-la-vivienda-en-sede-vina-del-mar",
+    "slug": "feria-de-la-vivienda-en-sede-vina-del-mar"
   },
   {
     "id": 8,
@@ -147,14 +222,23 @@
     "horaTermino": "13:00",
     "publicoObjetivo": "Profesores",
     "modalidad": "Presencial",
-    "ubicaciones": [
-      "Campus San Joaquín"
-    ],
-    "lugar": "Sala A014",
-    "tematicas": [
-      "Investigación",
-      "Taller"
-    ]
+    "ubicaciones": ["Campus San Joaquín"],
+    "lugar": ["Campus San Joaquín"],
+    "tematicas": ["Investigación", "Taller"],
+    "calendario": {
+      "zonaHoraria": "America/Santiago",
+      "todoElDia": false,
+      "fechaInicio": "2026-06-02",
+      "fechaTermino": "2026-06-02",
+      "horaInicio": "12:00",
+      "horaTermino": "13:00",
+      "duracionMinutosSugerida": null,
+      "ubicacion": "Sala A-014",
+      "titulo": "Taller “Aprende a editar y publicar contenidos en Wikipedia”",
+      "descripcion": "La Universidad Técnica Federico Santa María les invita cordialmente a participar del taller “Wikipedia en la academia: cómo aportar al conocimiento abierto desde la USM”, que será impartido por Patricio Romero Yunge, director de Educación Wikimedia Chile."
+    },
+    "ruta": "/eventos/taller-aprende-a-editar-y-publicar-contenidos-en-wikipedia",
+    "slug": "taller-aprende-a-editar-y-publicar-contenidos-en-wikipedia"
   },
   {
     "id": 9,
@@ -165,16 +249,25 @@
     "fechaTermino": "2026-06-04",
     "horaInicio": "12:30",
     "horaTermino": "13:40",
-    "publicoObjetivo": "Abierto",
+    "publicoObjetivo": "Todo público",
     "modalidad": "Presencial",
-    "ubicaciones": [
-      "Campus San Joaquín"
-    ],
-    "lugar": "Sala A-015",
-    "tematicas": [
-      "Investigación",
-      "Charla"
-    ]
+    "ubicaciones": ["Campus San Joaquín"],
+    "lugar": ["Campus San Joaquín"],
+    "tematicas": ["Investigación", "Charla"],
+    "calendario": {
+      "zonaHoraria": "America/Santiago",
+      "todoElDia": false,
+      "fechaInicio": "2026-06-04",
+      "fechaTermino": "2026-06-04",
+      "horaInicio": "12:30",
+      "horaTermino": "13:40",
+      "duracionMinutosSugerida": null,
+      "ubicacion": "Sala A-015",
+      "titulo": "Charla MECTalks: “Simular, prototipar, fallar, corregir”",
+      "descripcion": "La Universidad Técnica Federico Santa María, a través de su Departamento de Ingeniería Mecánica, invita a participar de la charla “Simular, prototipar, fallar, corregir”, que será dictada por Gerardo Garay, profesor del Departamento de Ingeniería Mecánica."
+    },
+    "ruta": "/eventos/charla-mectalks-simular-prototipar-fallar-corregir",
+    "slug": "charla-mectalks-simular-prototipar-fallar-corregir"
   },
   {
     "id": 10,
@@ -185,16 +278,25 @@
     "fechaTermino": "2026-06-04",
     "horaInicio": "16:05",
     "horaTermino": null,
-    "publicoObjetivo": "Abierto",
+    "publicoObjetivo": "Todo público",
     "modalidad": "Presencial",
-    "ubicaciones": [
-      "Casa Central Valparaíso"
-    ],
-    "lugar": "Sala de conferencias Dr. Luciano Laroze (E300)",
-    "tematicas": [
-      "Ciencia",
-      "Conversatorio"
-    ]
+    "ubicaciones": ["Campus Casa Central Valparaíso"],
+    "lugar": ["Campus Casa Central Valparaíso"],
+    "tematicas": ["Ciencia", "Conversatorio"],
+    "calendario": {
+      "zonaHoraria": "America/Santiago",
+      "todoElDia": false,
+      "fechaInicio": "2026-06-04",
+      "fechaTermino": "2026-06-04",
+      "horaInicio": "16:05",
+      "horaTermino": null,
+      "duracionMinutosSugerida": 60,
+      "ubicacion": "Campus Casa Central Valparaíso",
+      "titulo": "Conversatorio “Café y Física: Avances espaciales”",
+      "descripcion": "La Universidad Técnica Federico Santa María, a través de su Departamento de Física, les invita cordialmente a participar del conversatorio “Café y Física: Avances espaciales”, que será presentado por Álvaro Aguirre Warden, director de Asuntos Espaciales del Centro de Estudios Estratégicos y Aeroespaciales (CEEA), Fuerza Aérea de Chile."
+    },
+    "ruta": "/eventos/conversatorio-cafe-y-fisica-avances-espaciales",
+    "slug": "conversatorio-cafe-y-fisica-avances-espaciales"
   },
   {
     "id": 11,
@@ -205,17 +307,25 @@
     "fechaTermino": "2026-06-05",
     "horaInicio": "08:30",
     "horaTermino": null,
-    "publicoObjetivo": "Abierto",
+    "publicoObjetivo": "Todo público",
     "modalidad": "Presencial",
-    "ubicaciones": [
-      "Campus San Joaquín"
-    ],
-    "lugar": null,
-    "tematicas": [
-      "Ciencia",
-      "Investigación",
-      "Congreso"
-    ]
+    "ubicaciones": ["Campus San Joaquín"],
+    "lugar": ["Campus San Joaquín"],
+    "tematicas": ["Ciencia", "Investigación", "Congreso"],
+    "calendario": {
+      "zonaHoraria": "America/Santiago",
+      "todoElDia": false,
+      "fechaInicio": "2026-06-04",
+      "fechaTermino": "2026-06-05",
+      "horaInicio": "08:30",
+      "horaTermino": null,
+      "duracionMinutosSugerida": 60,
+      "ubicacion": "Campus San Joaquín",
+      "titulo": "Data Science International Congress Data Frontiers",
+      "descripcion": "La Universidad Técnica Federico Santa María les invita cordialmente a participar de Data Science International Congress Data Frontiers, espacio de reflexión acerca de la importancia de la ciencia de datos en distintos ámbitos del conocimiento, en que convergen la academia y la industria tecnológica, generando networking y oportunidades de investigación y negocios."
+    },
+    "ruta": "/eventos/data-science-international-congress-data-frontiers",
+    "slug": "data-science-international-congress-data-frontiers"
   },
   {
     "id": 12,
@@ -226,16 +336,25 @@
     "fechaTermino": "2026-06-05",
     "horaInicio": "10:00",
     "horaTermino": "17:00",
-    "publicoObjetivo": "Abierto",
+    "publicoObjetivo": "Todo público",
     "modalidad": "Online",
-    "ubicaciones": [
-      "Online"
-    ],
-    "lugar": null,
-    "tematicas": [
-      "Taller",
-      "Programación"
-    ]
+    "ubicaciones": ["Online"],
+    "lugar": ["Online"],
+    "tematicas": ["Taller", "Programación"],
+    "calendario": {
+      "zonaHoraria": "America/Santiago",
+      "todoElDia": false,
+      "fechaInicio": "2026-06-05",
+      "fechaTermino": "2026-06-05",
+      "horaInicio": "10:00",
+      "horaTermino": "17:00",
+      "duracionMinutosSugerida": null,
+      "ubicacion": "Online",
+      "titulo": "PyDay Valparaíso",
+      "descripcion": "La Universidad Técnica Federico Santa María les invita cordialmente a participar del evento PyDay Valparaíso, que en su quinta versión ofrecerá talleres interactivos y charlas inspiradoras en un ambiente creativo y colaborativo."
+    },
+    "ruta": "/eventos/pyday-valparaiso",
+    "slug": "pyday-valparaiso"
   },
   {
     "id": 13,
@@ -246,16 +365,25 @@
     "fechaTermino": "2026-06-06",
     "horaInicio": "19:00",
     "horaTermino": "21:00",
-    "publicoObjetivo": "Abierto",
+    "publicoObjetivo": "Todo público",
     "modalidad": "Presencial",
-    "ubicaciones": [
-      "Casa Central Valparaíso"
-    ],
-    "lugar": "Teatro Aula Magna",
-    "tematicas": [
-      "Cultura",
-      "Música"
-    ]
+    "ubicaciones": ["Campus Casa Central Valparaíso"],
+    "lugar": ["Campus Casa Central Valparaíso"],
+    "tematicas": ["Cultura", "Música"],
+    "calendario": {
+      "zonaHoraria": "America/Santiago",
+      "todoElDia": false,
+      "fechaInicio": "2026-06-06",
+      "fechaTermino": "2026-06-06",
+      "horaInicio": "19:00",
+      "horaTermino": "21:00",
+      "duracionMinutosSugerida": null,
+      "ubicacion": "Teatro Aula Magna",
+      "titulo": "La gran pianista estadounidense Claire Huangci en la Temporada Artística USM",
+      "descripcion": "La pianista estadounidense Claire Huangci es reconocida en la actualidad como una de las intérpretes más brillantes y versátiles de su generación. Dueña de una técnica deslumbrante y de una sensibilidad musical poco común, Huangci ha conquistado escenarios de Europa, Asia y América con interpretaciones que combinan virtuosismo, profundidad expresiva y una presencia escénica magnética."
+    },
+    "ruta": "/eventos/la-gran-pianista-estadounidense-claire-huangci-en-la-temporada-artistica-usm",
+    "slug": "la-gran-pianista-estadounidense-claire-huangci-en-la-temporada-artistica-usm"
   },
   {
     "id": 14,
@@ -266,17 +394,25 @@
     "fechaTermino": "2026-06-09",
     "horaInicio": "09:00",
     "horaTermino": null,
-    "publicoObjetivo": "Abierto",
+    "publicoObjetivo": "Todo público",
     "modalidad": "Presencial",
-    "ubicaciones": [
-      "Casa Central Valparaíso"
-    ],
-    "lugar": "Sala A1",
-    "tematicas": [
-      "Ciencia",
-      "Investigación",
-      "Workshop"
-    ]
+    "ubicaciones": ["Campus Casa Central Valparaíso"],
+    "lugar": ["Sala A1"],
+    "tematicas": ["Ciencia", "Investigación", "Workshop"],
+    "calendario": {
+      "zonaHoraria": "America/Santiago",
+      "todoElDia": false,
+      "fechaInicio": "2026-06-08",
+      "fechaTermino": "2026-06-09",
+      "horaInicio": "09:00",
+      "horaTermino": null,
+      "duracionMinutosSugerida": 60,
+      "ubicacion": "Sala A1",
+      "titulo": "Workshop internacional “Black Carbon”",
+      "descripcion": "La Universidad Técnica Federico Santa María, a través de su Centro de Tecnologías Ambientales, CETAM, les invita cordialmente a participar del workshop internacional “Black Carbon”."
+    },
+    "ruta": "/eventos/workshop-internacional-black-carbon",
+    "slug": "workshop-internacional-black-carbon"
   },
   {
     "id": 15,
@@ -287,16 +423,25 @@
     "fechaTermino": "2026-06-09",
     "horaInicio": "12:30",
     "horaTermino": null,
-    "publicoObjetivo": "Abierto",
+    "publicoObjetivo": "Todo público",
     "modalidad": "Presencial",
-    "ubicaciones": [
-      "Campus Vitacura"
-    ],
-    "lugar": "Auditorio Belloto 1",
-    "tematicas": [
-      "Cultura",
-      "Charla"
-    ]
+    "ubicaciones": ["Campus Vitacura"],
+    "lugar": ["Campus Vitacura"],
+    "tematicas": ["Cultura", "Charla"],
+    "calendario": {
+      "zonaHoraria": "America/Santiago",
+      "todoElDia": false,
+      "fechaInicio": "2026-06-09",
+      "fechaTermino": "2026-06-09",
+      "horaInicio": "12:30",
+      "horaTermino": null,
+      "duracionMinutosSugerida": 60,
+      "ubicacion": "Auditorio Belloto 1",
+      "titulo": "Charla “Habitar la Inmensidad”",
+      "descripcion": "La Universidad Técnica Federico Santa María les invita cordialmente a participar de la charla “Habitar la Inmensidad”, que se enmarca en una nueva edición del Seminario en Ingeniería, Ciencias y Artes del Campus Vitacura."
+    },
+    "ruta": "/eventos/charla-habitar-la-inmensidad",
+    "slug": "charla-habitar-la-inmensidad"
   },
   {
     "id": 16,
@@ -309,14 +454,23 @@
     "horaTermino": "13:15",
     "publicoObjetivo": "Estudiantes y titulados",
     "modalidad": "Presencial",
-    "ubicaciones": [
-      "Sede Viña del Mar"
-    ],
-    "lugar": null,
-    "tematicas": [
-      "Taller",
-      "Empleabilidad"
-    ]
+    "ubicaciones": ["Sede Viña del Mar"],
+    "lugar": ["Sede Viña del Mar"],
+    "tematicas": ["Taller", "Empleabilidad"],
+    "calendario": {
+      "zonaHoraria": "America/Santiago",
+      "todoElDia": false,
+      "fechaInicio": "2026-06-11",
+      "fechaTermino": "2026-06-11",
+      "horaInicio": "12:30",
+      "horaTermino": "13:15",
+      "duracionMinutosSugerida": null,
+      "ubicacion": "Auditorio G1",
+      "titulo": "Taller de Empleabilidad “Primera experiencia profesional: cómo dar el salto al mundo laboral, práctica y empleo”",
+      "descripcion": "La Universidad Técnica Federico Santa María, Sede Viña del Mar, a través de su Oficina de Gestión de Talentos y Empleabilidad (GESTAL) de la Dirección de Vinculación con el Medio, invita cordialmente a sus estudiantes y titulados a participar del Taller de Empleabilidad “Primera experiencia profesional: cómo dar el salto al mundo laboral, práctica y empleo”, instancia orientada a entregar herramientas y recomendaciones para enfrentar de mejor manera el ingreso al mundo laboral."
+    },
+    "ruta": "/eventos/taller-de-empleabilidad-primera-experiencia-profesional-como-dar-el-salto-al-mundo-laboral-practica-y-empleo",
+    "slug": "taller-de-empleabilidad-primera-experiencia-profesional-como-dar-el-salto-al-mundo-laboral-practica-y-empleo"
   },
   {
     "id": 17,
@@ -327,16 +481,25 @@
     "fechaTermino": "2026-06-11",
     "horaInicio": "12:30",
     "horaTermino": "13:40",
-    "publicoObjetivo": "Abierto",
+    "publicoObjetivo": "Todo público",
     "modalidad": "Presencial",
-    "ubicaciones": [
-      "Campus San Joaquín"
-    ],
-    "lugar": "Sala A-003",
-    "tematicas": [
-      "Investigación",
-      "Charla"
-    ]
+    "ubicaciones": ["Campus San Joaquín"],
+    "lugar": ["Campus San Joaquín"],
+    "tematicas": ["Investigación", "Charla"],
+    "calendario": {
+      "zonaHoraria": "America/Santiago",
+      "todoElDia": false,
+      "fechaInicio": "2026-06-11",
+      "fechaTermino": "2026-06-11",
+      "horaInicio": "12:30",
+      "horaTermino": "13:40",
+      "duracionMinutosSugerida": null,
+      "ubicacion": "Sala A-003",
+      "titulo": "Charla MECTalks: “Contaminación vehicular bajo la lupa: satélites, modelos y salud perinatal”",
+      "descripcion": "La Universidad Técnica Federico Santa María, a través de su Departamento de Ingeniería Mecánica, invita a participar de la charla “Contaminación vehicular bajo la lupa: satélites, modelos y salud perinatal”, que será dictada por Mauricio Osses, académico del Departamento de Ingeniería Mecánica."
+    },
+    "ruta": "/eventos/charla-mectalks-contaminacion-vehicular-bajo-la-lupa-satelites-modelos-y-salud-perinatal",
+    "slug": "charla-mectalks-contaminacion-vehicular-bajo-la-lupa-satelites-modelos-y-salud-perinatal"
   },
   {
     "id": 18,
@@ -347,15 +510,25 @@
     "fechaTermino": "2026-06-11",
     "horaInicio": "12:15",
     "horaTermino": "13:40",
-    "publicoObjetivo": "Abierto",
+    "publicoObjetivo": "Todo público",
     "modalidad": "Presencial",
-    "ubicaciones": [
-      "Campus San Joaquín"
-    ],
-    "lugar": "Sala A-016",
-    "tematicas": [
-      "Seminario"
-    ]
+    "ubicaciones": ["Campus San Joaquín"],
+    "lugar": ["Campus San Joaquín"],
+    "tematicas": ["Seminario"],
+    "calendario": {
+      "zonaHoraria": "America/Santiago",
+      "todoElDia": false,
+      "fechaInicio": "2026-06-11",
+      "fechaTermino": "2026-06-11",
+      "horaInicio": "12:15",
+      "horaTermino": "13:40",
+      "duracionMinutosSugerida": null,
+      "ubicacion": "Sala A-016",
+      "titulo": "Seminario “Experiencias, prácticas y desafíos actuales en salud mental universitaria”",
+      "descripcion": "La Universidad Técnica Federico Santa María, a través de su Departamento de Estudios Humanísticos, invita a participar del seminario “Experiencias, prácticas y desafíos actuales en salud mental universitaria”."
+    },
+    "ruta": "/eventos/seminario-experiencias-practicas-y-desafios-actuales-en-salud-mental-universitaria",
+    "slug": "seminario-experiencias-practicas-y-desafios-actuales-en-salud-mental-universitaria"
   },
   {
     "id": 19,
@@ -366,16 +539,25 @@
     "fechaTermino": "2026-06-27",
     "horaInicio": "19:00",
     "horaTermino": "20:30",
-    "publicoObjetivo": "Abierto",
+    "publicoObjetivo": "Todo público",
     "modalidad": "Presencial",
-    "ubicaciones": [
-      "Casa Central Valparaíso"
-    ],
-    "lugar": "Teatro Aula Magna",
-    "tematicas": [
-      "Cultura",
-      "Música"
-    ]
+    "ubicaciones": ["Campus Casa Central Valparaíso"],
+    "lugar": ["Campus Campus Casa Central Valparaíso"],
+    "tematicas": ["Cultura", "Música"],
+    "calendario": {
+      "zonaHoraria": "America/Santiago",
+      "todoElDia": false,
+      "fechaInicio": "2026-06-27",
+      "fechaTermino": "2026-06-27",
+      "horaInicio": "19:00",
+      "horaTermino": "20:30",
+      "duracionMinutosSugerida": null,
+      "ubicacion": "Teatro Aula Magna",
+      "titulo": "La Orquesta Sinfónica de La Serena junto al director Luis Toro Araya",
+      "descripcion": "La Orquesta Sinfónica Universidad de La Serena (OSULS) es el principal conjunto profesional de la Región de Coquimbo. Con más de 30 años de trayectoria, forma parte de la Red de Orquestas Regionales Profesionales del Ministerio de las Culturas, las Artes y el Patrimonio."
+    },
+    "ruta": "/eventos/la-orquesta-sinfonica-de-la-serena-junto-al-director-luis-toro-araya",
+    "slug": "la-orquesta-sinfonica-de-la-serena-junto-al-director-luis-toro-araya"
   },
   {
     "id": 20,
@@ -386,16 +568,25 @@
     "fechaTermino": "2026-07-11",
     "horaInicio": "19:00",
     "horaTermino": "21:00",
-    "publicoObjetivo": "Abierto",
+    "publicoObjetivo": "Todo público",
     "modalidad": "Presencial",
-    "ubicaciones": [
-      "Casa Central Valparaíso"
-    ],
-    "lugar": "Teatro Aula Magna",
-    "tematicas": [
-      "Cultura",
-      "Música"
-    ]
+    "ubicaciones": ["Campus Casa Central Valparaíso"],
+    "lugar": ["Campus Campus Casa Central Valparaíso"],
+    "tematicas": ["Cultura", "Música"],
+    "calendario": {
+      "zonaHoraria": "America/Santiago",
+      "todoElDia": false,
+      "fechaInicio": "2026-07-11",
+      "fechaTermino": "2026-07-11",
+      "horaInicio": "19:00",
+      "horaTermino": "21:00",
+      "duracionMinutosSugerida": null,
+      "ubicacion": "Teatro Aula Magna",
+      "titulo": "El gran regreso de la pianista Rapa Nui Mahani Teave",
+      "descripcion": "El esperado retorno de la destacada pianista Mahani Teave a la Temporada Artística de la Universidad Técnica Federico Santa María constituye uno de los hitos más significativos de este ciclo en su edición 2026."
+    },
+    "ruta": "/eventos/el-gran-regreso-de-la-pianista-rapa-nui-mahani-teave",
+    "slug": "el-gran-regreso-de-la-pianista-rapa-nui-mahani-teave"
   },
   {
     "id": 21,
@@ -406,16 +597,25 @@
     "fechaTermino": "2026-08-08",
     "horaInicio": "19:00",
     "horaTermino": "20:30",
-    "publicoObjetivo": "Abierto",
+    "publicoObjetivo": "Todo público",
     "modalidad": "Presencial",
-    "ubicaciones": [
-      "Casa Central Valparaíso"
-    ],
-    "lugar": "Teatro Aula Magna",
-    "tematicas": [
-      "Cultura",
-      "Teatro"
-    ]
+    "ubicaciones": ["Campus Casa Central Valparaíso"],
+    "lugar": ["Campus Campus Casa Central Valparaíso"],
+    "tematicas": ["Cultura", "Teatro"],
+    "calendario": {
+      "zonaHoraria": "America/Santiago",
+      "todoElDia": false,
+      "fechaInicio": "2026-08-08",
+      "fechaTermino": "2026-08-08",
+      "horaInicio": "19:00",
+      "horaTermino": "20:30",
+      "duracionMinutosSugerida": null,
+      "ubicacion": "Teatro Aula Magna",
+      "titulo": "La prestigiosa compañía Teatrocinema presenta su obra familiar “Kaori”",
+      "descripcion": "La Temporada Artística de la Universidad Técnica Federico Santa María se enorgullece en presentar “Kaori”, creación de la prestigiosa compañía chilena Teatrocinema, reconocida internacionalmente por su innovadora fusión de artes escénicas y lenguaje cinematográfico."
+    },
+    "ruta": "/eventos/la-prestigiosa-compania-teatrocinema-presenta-su-obra-familiar-kaori",
+    "slug": "la-prestigiosa-compania-teatrocinema-presenta-su-obra-familiar-kaori"
   },
   {
     "id": 22,
@@ -426,15 +626,24 @@
     "fechaTermino": "2026-08-29",
     "horaInicio": "19:00",
     "horaTermino": "21:00",
-    "publicoObjetivo": "Abierto",
+    "publicoObjetivo": "Todo público",
     "modalidad": "Presencial",
-    "ubicaciones": [
-      "Casa Central Valparaíso"
-    ],
-    "lugar": "Teatro Aula Magna",
-    "tematicas": [
-      "Cultura",
-      "Música"
-    ]
+    "ubicaciones": ["Campus Casa Central Valparaíso"],
+    "lugar": ["Campus Campus Casa Central Valparaíso"],
+    "tematicas": ["Cultura", "Música"],
+    "calendario": {
+      "zonaHoraria": "America/Santiago",
+      "todoElDia": false,
+      "fechaInicio": "2026-08-29",
+      "fechaTermino": "2026-08-29",
+      "horaInicio": "19:00",
+      "horaTermino": "21:00",
+      "duracionMinutosSugerida": null,
+      "ubicacion": "Teatro Aula Magna",
+      "titulo": "Gala Lírica: Ópera y Canción con Christian Senn y Tabita Martínez",
+      "descripcion": "Reconocido por su trayectoria en los escenarios más importantes de la ópera a nivel mundial, Christian Senn llega por primera vez a la Temporada Artística USM junto a Tabita Martínez, una de las sopranos chilenas más sorprendentes de la actualidad."
+    },
+    "ruta": "/eventos/gala-lirica-opera-y-cancion-con-christian-senn-y-tabita-martinez",
+    "slug": "gala-lirica-opera-y-cancion-con-christian-senn-y-tabita-martinez"
   }
 ]

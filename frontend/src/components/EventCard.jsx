@@ -7,37 +7,23 @@ import SaveModal from "./SaveModal";
 
 import "./EventCard.css";
 
-function EventCard({
-  id,
-  img,
-  title,
-  date,
-  hora,
-  ubication,
-  modalidad,
-  mainTheme,
-}) {
+function EventCard({ evento, onAntesAbrirDetalle }) {
+  const navigate = useNavigate();
+
+  const [modalCompartirAbierto, setModalCompartirAbierto] = useState(false);
+  const [modalGuardarAbierto, setModalGuardarAbierto] = useState(false);
+
+  const calendario = evento.calendario;
   function obtenerPartesFecha(fecha) {
     if (!fecha) {
-      return {
-        year: "",
-        month: "",
-        day: "",
-      };
+      return { year: "", month: "", day: "" };
     }
 
-    const partes = fecha.split("-");
-
-    if (partes[0].length === 4) {
-      const [year, month, day] = partes;
-      return { year, month, day };
-    }
-
-    const [day, month, year] = partes;
+    const [year, month, day] = fecha.split("-");
     return { year, month, day };
   }
 
-  function extraer_mes_corto(fecha) {
+  function extraerMesCorto(fecha) {
     const meses = {
       1: "ene",
       2: "feb",
@@ -57,19 +43,10 @@ function EventCard({
     return meses[Number(month)] ?? "";
   }
 
-  function extraer_dia(fecha) {
+  function extraerDia(fecha) {
     const { day } = obtenerPartesFecha(fecha);
     return day;
   }
-
-  const [modalCompartirAbierto, setModalCompartirAbierto] = useState(false);
-  const [modalGuardarAbierto, setModalGuardarAbierto] = useState(false);
-
-  const urlCompartir = `${window.location.origin}/eventos/${title
-    .toLowerCase()
-    .replaceAll(" ", "-")}`;
-
-  const navigate = useNavigate();
 
   function obtenerClaseTitulo(title) {
     if (title.length > 70) {
@@ -82,23 +59,52 @@ function EventCard({
 
     return "card-title";
   }
+
+  function obtenerTextoHora() {
+    if (calendario?.todoElDia) {
+      return "Todo el día";
+    }
+
+    if (calendario?.horaInicio && calendario?.horaTermino) {
+      return `${calendario.horaInicio} - ${calendario.horaTermino}`;
+    }
+
+    if (calendario?.horaInicio) {
+      return calendario.horaInicio;
+    }
+
+    return "Por confirmar";
+  }
+
+  const urlCompartir = `${window.location.origin}/eventos/${evento.slug}`;
+
   return (
-    <article className="card" onClick={() => navigate(`/eventos/${id}`)}>
-      <img src={img} className="card-img-top" />
-      <time className="card-short-date">
-        <span className="month">{extraer_mes_corto(date)}</span>
-        <span className="day">{extraer_dia(date)}</span>
+    <article
+      className="card"
+      onClick={() => {
+        onAntesAbrirDetalle?.();
+        navigate(`/eventos/${evento.slug}`);
+      }}
+    >
+      <img src={evento.imagen} className="card-img-top" alt={evento.nombre} />
+
+      <time className="card-short-date" dateTime={calendario.fechaInicio}>
+        <span className="month">{extraerMesCorto(calendario.fechaInicio)}</span>
+        <span className="day">{extraerDia(calendario.fechaInicio)}</span>
       </time>
+
       <div className="widget">
-        <span>{ubication}</span>
-        <span>{modalidad}</span>
+        <span>{evento.ubicaciones?.[0] ?? "Sin ubicación"}</span>
+        <span>{evento.modalidad}</span>
       </div>
+
       <div className="theme-chip">
-        <span>{mainTheme}</span>
+        <span>{evento.tematicas?.[0] ?? "General"}</span>
       </div>
+
       <section className="card-body">
-        <h3 className={obtenerClaseTitulo(title)}>{title}</h3>
-        <p className="hour">{hora}</p>
+        <h3 className={obtenerClaseTitulo(evento.nombre)}>{evento.nombre}</h3>
+        <p className="hour">{obtenerTextoHora()}</p>
       </section>
 
       <hr className="card-separator" />
@@ -134,15 +140,14 @@ function EventCard({
       <ShareModal
         abierto={modalCompartirAbierto}
         onCerrar={() => setModalCompartirAbierto(false)}
-        titulo={title}
+        titulo={evento.nombre}
         url={urlCompartir}
       />
+
       <SaveModal
         abierto={modalGuardarAbierto}
         onCerrar={() => setModalGuardarAbierto(false)}
-        titulo={title}
-        fechaInicio={date}
-        ubicacion={ubication}
+        calendario={calendario}
       />
     </article>
   );

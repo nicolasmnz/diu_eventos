@@ -6,15 +6,7 @@ import { CalendarDays, Clock4 } from "lucide-react";
 
 import "./SaveModal.css";
 
-function SaveModal({
-  abierto,
-  onCerrar,
-  titulo,
-  fechaInicio,
-  horaInicio,
-  ubicacion,
-}) {
-  //incluir  horaInicio, horaTermino, fechaTermino
+function SaveModal({ abierto, onCerrar, calendario }) {
   useEffect(() => {
     if (!abierto) return;
 
@@ -28,37 +20,132 @@ function SaveModal({
     return () => document.removeEventListener("keydown", cerrarConEscape);
   }, [abierto, onCerrar]);
 
-  if (!abierto) return null;
+  if (!abierto || !calendario) return null;
 
-  function formatearFechaGoogle(fecha) {
-    // si viene "26-05-2026"
-    const [day, month, year] = fecha.split("-");
-    return `${year}${month}${day}`;
+  function fechaGoogle(fecha) {
+    return fecha.replaceAll("-", "");
+  }
+
+  function sumarDias(fecha, dias) {
+    const [year, month, day] = fecha.split("-").map(Number);
+    const nuevaFecha = new Date(Date.UTC(year, month - 1, day + dias));
+
+    return nuevaFecha.toISOString().slice(0, 10);
+  }
+
+  function sumarMinutos(fecha, hora, minutos) {
+    const fechaHora = new Date(`${fecha}T${hora}:00`);
+    fechaHora.setMinutes(fechaHora.getMinutes() + minutos);
+
+    const nuevaFecha = fechaHora.toISOString().slice(0, 10);
+    const nuevaHora = fechaHora.toTimeString().slice(0, 5);
+
+    return {
+      fecha: nuevaFecha,
+      hora: nuevaHora,
+    };
+  }
+
+  function fechaHoraGoogle(fecha, hora) {
+    return `${fechaGoogle(fecha)}T${hora.replace(":", "")}00`;
+  }
+
+  function obtenerFechaTerminoExclusiva() {
+    return sumarDias(calendario.fechaTermino ?? calendario.fechaInicio, 1);
+  }
+
+  function obtenerFinConHora() {
+    if (calendario.horaTermino) {
+      return {
+        fecha: calendario.fechaTermino ?? calendario.fechaInicio,
+        hora: calendario.horaTermino,
+      };
+    }
+
+    return sumarMinutos(
+      calendario.fechaInicio,
+      calendario.horaInicio,
+      calendario.duracionMinutosSugerida ?? 60,
+    );
+  }
+
+  function obtenerTextoFecha() {
+    if (calendario.fechaInicio === calendario.fechaTermino) {
+      return calendario.fechaInicio;
+    }
+
+    return `${calendario.fechaInicio} - ${calendario.fechaTermino}`;
+  }
+
+  function obtenerTextoHora() {
+    if (calendario.todoElDia) {
+      return "Todo el día";
+    }
+
+    if (calendario.horaInicio && calendario.horaTermino) {
+      return `${calendario.horaInicio} - ${calendario.horaTermino}`;
+    }
+
+    if (calendario.horaInicio) {
+      return `Desde ${calendario.horaInicio}`;
+    }
+
+    return "Horario por confirmar";
   }
 
   function abrirGoogleCalendar() {
-    const fecha = formatearFechaGoogle(fechaInicio);
-
     const url = new URL("https://calendar.google.com/calendar/render");
+
     url.searchParams.set("action", "TEMPLATE");
-    url.searchParams.set("text", titulo);
-    url.searchParams.set("dates", `${fecha}/${fecha}`);
-    url.searchParams.set("location", ubicacion);
+    url.searchParams.set("text", calendario.titulo);
+    url.searchParams.set("details", calendario.descripcion ?? "");
+    url.searchParams.set("location", calendario.ubicacion ?? "");
+    url.searchParams.set("ctz", calendario.zonaHoraria ?? "America/Santiago");
+
+    if (calendario.todoElDia) {
+      const inicio = fechaGoogle(calendario.fechaInicio);
+      const termino = fechaGoogle(obtenerFechaTerminoExclusiva());
+
+      url.searchParams.set("dates", `${inicio}/${termino}`);
+    } else {
+      const fin = obtenerFinConHora();
+
+      const inicio = fechaHoraGoogle(
+        calendario.fechaInicio,
+        calendario.horaInicio,
+      );
+
+      const termino = fechaHoraGoogle(fin.fecha, fin.hora);
+
+      url.searchParams.set("dates", `${inicio}/${termino}`);
+    }
 
     window.open(url.toString(), "_blank", "noopener,noreferrer");
   }
 
   function abrirMicrosoftCalendar() {
-    const [day, month, year] = fechaInicio.split("-");
-    const fechaISO = `${year}-${month}-${day}`;
-
     const url = new URL(
       "https://outlook.office.com/calendar/0/deeplink/compose",
     );
-    url.searchParams.set("subject", titulo);
-    url.searchParams.set("startdt", fechaISO);
-    url.searchParams.set("enddt", fechaISO);
-    url.searchParams.set("location", ubicacion);
+
+    url.searchParams.set("subject", calendario.titulo);
+    url.searchParams.set("body", calendario.descripcion ?? "");
+    url.searchParams.set("location", calendario.ubicacion ?? "");
+
+    if (calendario.todoElDia) {
+      url.searchParams.set("allday", "true");
+      url.searchParams.set("startdt", calendario.fechaInicio);
+      url.searchParams.set("enddt", obtenerFechaTerminoExclusiva());
+    } else {
+      const fin = obtenerFinConHora();
+
+      url.searchParams.set(
+        "startdt",
+        `${calendario.fechaInicio}T${calendario.horaInicio}:00`,
+      );
+
+      url.searchParams.set("enddt", `${fin.fecha}T${fin.hora}:00`);
+    }
 
     window.open(url.toString(), "_blank", "noopener,noreferrer");
   }
@@ -83,26 +170,29 @@ function SaveModal({
 
         <header className="save-modal-header">
           <h2 id="save-modal-title">Guardar evento</h2>
-          <p>{titulo}</p>
+          <p>{calendario.titulo}</p>
         </header>
+
         <div className="save-modal-resume">
           <div className="save-modal-resume-item">
             <CalendarDays size={20} strokeWidth={2.2} />
-            <span>{fechaInicio}</span>
+            <span>{obtenerTextoFecha()}</span>
           </div>
 
           <div className="save-modal-resume-item">
             <Clock4 size={20} strokeWidth={2.2} />
-            <span>11:00 AM</span>
+            <span>{obtenerTextoHora()}</span>
           </div>
         </div>
+
         <div className="save-modal-options">
           <button type="button" onClick={abrirGoogleCalendar}>
-            <FaGoogle size={30} strokeWidth={2.2} />
+            <FaGoogle size={30} />
             <span>Guardar en calendario de Google</span>
           </button>
+
           <button type="button" onClick={abrirMicrosoftCalendar}>
-            <FaMicrosoft size={30} strokeWidth={2.2} />
+            <FaMicrosoft size={30} />
             <span>Guardar en calendario de Microsoft</span>
           </button>
         </div>
