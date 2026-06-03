@@ -1,27 +1,33 @@
 ## Levantar el proyecto:
-1. Clonar repositorio 
-2. Abrir terminal en raiz del proyecto
-3. Escribir:  
 
-    ```bash
-    docker-compose up --build
-    ```
+1. Clonar repositorio
+   ```bash
+   git clone git@github.com:nicolasmnz/diu_eventos.git
+   ```
+2. Abrir terminal en raiz del proyecto
+3. Escribir:
+
+   ```bash
+   docker-compose up --build
+   ```
 
 ## Estructura
 
 El proyecto esta construido en una arquitectura monorepo.  
-Lo que permite separar el `backend/`y  `frontend/` 
-
+Lo que permite separar el `backend/`y `frontend/`
 
 ### Raíz
+
 ```bash
 .
-├── backend/                # Servidor PostgreSQL      
+├── backend/                # Servidor PostgreSQL
 ├── docker-compose.yml      # Levanta backend y frontend
 ├── frontend/               # Frontend con componeentes
 └── README.md               # Este archivo
 ```
+
 ### frontend/
+
 ```bash
 .
 ├── Dockerfile
@@ -43,13 +49,14 @@ Lo que permite separar el `backend/`y  `frontend/`
 ```
 
 ### backend/
+
 ```bash
 .
 ├── Dockerfile
 ├── package.json
 ├── package-lock.json
 └── src/
-    ├── config/ 
+    ├── config/
     │   └── db.js       # Gestiona las consultas con la BDD
     └── index.js        # Verifica que la base de datos responda
 ```
