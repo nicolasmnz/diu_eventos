@@ -1,26 +1,35 @@
+/* Evita que padding y bordes aumenten el ancho real de los elementos */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 .calendar {
-  width: 340px;
+  width: min(340px, calc(100vw - 32px));
+  max-width: 100%;
+
   background-color: white;
+  border-top: 5px solid #f7ae00;
   border-radius: 12px;
   overflow: hidden;
-
-  border-top: 5px solid #f7ae00;
 
   box-shadow: 0 14px 32px rgba(0, 0, 0, 0.22);
 
   font-family: "Montserrat", Arial, sans-serif;
 
-  z-index: 80;
   position: relative;
+  z-index: 80;
 }
 
 .calendar-header {
-  height: 56px;
+  min-height: 56px;
   padding: 0 18px;
 
   display: flex;
   justify-content: space-between;
   align-items: center;
+  gap: 8px;
 
   background-color: #002855;
   color: white;
@@ -29,9 +38,14 @@
 .calendar-header button {
   width: 34px;
   height: 34px;
+  flex-shrink: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   border: none;
-  border-radius: 999px;
+  border-radius: 50%;
 
   background-color: rgba(255, 255, 255, 0.14);
   color: white;
@@ -46,12 +60,9 @@
     transform 0.2s ease;
 }
 
-.calendar-header button:hover {
-  background-color: rgba(255, 255, 255, 0.24);
-  transform: translateY(-2px);
-}
-
 .monthYear {
+  margin: 0;
+
   text-align: center;
   font-size: 0.95rem;
   font-weight: 800;
@@ -60,7 +71,7 @@
 
 .days {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(7, minmax(0, 1fr));
 
   background-color: #f7f7f7;
   border-bottom: 1px solid #e5e5e5;
@@ -79,15 +90,15 @@
 
 .dates {
   display: grid;
-  grid-template-columns: repeat(7, 1fr);
+  grid-template-columns: repeat(7, minmax(0, 1fr));
   gap: 4px;
 
   padding: 12px;
 }
 
 .date {
-  width: 36px;
-  height: 36px;
+  width: min(36px, 100%);
+  aspect-ratio: 1 / 1;
   margin: auto;
 
   display: flex;
@@ -95,7 +106,7 @@
   justify-content: center;
 
   border: 2px solid transparent;
-  border-radius: 999px;
+  border-radius: 50%;
 
   background-color: transparent;
   color: #222;
@@ -112,19 +123,9 @@
     transform 0.2s ease;
 }
 
-.date:hover {
-  border: 2px solid #006b9a;
-  color: black;
-  transform: translateY(-2px);
-}
-
 .date.active {
-  border: 2px solid #f7ae00;
+  border-color: #f7ae00;
   color: black;
-}
-
-.date.active:hover {
-  border: 2px solid #f7ae00;
 }
 
 .date.selected {
@@ -149,4 +150,58 @@
   background-color: transparent;
   color: #c9c9c9;
   transform: none;
+}
+
+/* Solo aplica hover en dispositivos que realmente tienen mouse */
+@media (hover: hover) {
+  .calendar-header button:hover {
+    background-color: rgba(255, 255, 255, 0.24);
+    transform: translateY(-2px);
+  }
+
+  .date:not(.inactive):hover {
+    border-color: #006b9a;
+    color: black;
+    transform: translateY(-2px);
+  }
+
+  .date.active:hover {
+    border-color: #f7ae00;
+  }
+}
+
+/* Ajustes para celulares estrechos */
+@media (max-width: 390px) {
+  .calendar {
+    width: calc(100vw - 24px);
+  }
+
+  .calendar-header {
+    min-height: 52px;
+    padding: 0 12px;
+  }
+
+  .calendar-header button {
+    width: 32px;
+    height: 32px;
+  }
+
+  .monthYear {
+    font-size: 0.9rem;
+  }
+
+  .dates {
+    gap: 2px;
+    padding: 8px;
+  }
+
+  .calendar-day {
+    padding: 8px 0;
+    font-size: 0.68rem;
+  }
+
+  .date {
+    width: min(34px, 100%);
+    font-size: 0.8rem;
+  }
 }

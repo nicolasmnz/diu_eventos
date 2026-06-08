@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useEffect, useRef, useState } from "react";
 import { ChevronDown } from "lucide-react";
 
 import "./DropdownCheckbox.css";
@@ -15,18 +15,23 @@ function DropdownCheckbox({
   const [abierto, setAbierto] = useState(false);
   const [interactuado, setInteractuado] = useState(false);
 
+  const dropdownRef = useRef(null);
+
   const todosSeleccionados = seleccionados.length === opciones.length;
 
   function manejarCambio(opcion) {
     setInteractuado(true);
+
     if (seleccionados.includes(opcion)) {
       setSeleccionados(seleccionados.filter((item) => item !== opcion));
     } else {
       setSeleccionados([...seleccionados, opcion]);
     }
   }
+
   function manejarTodos() {
     setInteractuado(true);
+
     if (todosSeleccionados) {
       setSeleccionados([]);
     } else {
@@ -38,6 +43,7 @@ function DropdownCheckbox({
     if (!interactuado) {
       return titulo;
     }
+
     if (seleccionados.length === 0) {
       return titulo;
     }
@@ -53,6 +59,46 @@ function DropdownCheckbox({
     return `${seleccionados.length} ${etiquetaCantidad} seleccionadas`;
   }
 
+  /*
+    Cierra el dropdown cuando el usuario hace clic
+    fuera del componente.
+  */
+  useEffect(() => {
+    function manejarClickFuera(event) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target)
+      ) {
+        setAbierto(false);
+      }
+    }
+
+    document.addEventListener("mousedown", manejarClickFuera);
+    document.addEventListener("touchstart", manejarClickFuera);
+
+    return () => {
+      document.removeEventListener("mousedown", manejarClickFuera);
+      document.removeEventListener("touchstart", manejarClickFuera);
+    };
+  }, []);
+
+  /*
+    También permite cerrar el menú presionando Escape.
+  */
+  useEffect(() => {
+    function manejarEscape(event) {
+      if (event.key === "Escape") {
+        setAbierto(false);
+      }
+    }
+
+    document.addEventListener("keydown", manejarEscape);
+
+    return () => {
+      document.removeEventListener("keydown", manejarEscape);
+    };
+  }, []);
+
   useEffect(() => {
     if (mostrarSeleccionRestaurada) {
       setInteractuado(true);
@@ -60,14 +106,19 @@ function DropdownCheckbox({
   }, [mostrarSeleccionRestaurada]);
 
   return (
-    <fieldset className="dropdown">
+    <fieldset ref={dropdownRef} className="dropdown">
       <legend className="dropdown-legend">{titulo}</legend>
+
       <button
         type="button"
         className="dropdown-button"
-        onClick={() => setAbierto(!abierto)}
+        aria-expanded={abierto}
+        onClick={() => setAbierto((estadoAnterior) => !estadoAnterior)}
       >
-        <span className="dropdown-button-text">{obtenerTextoBoton()}</span>
+        <span className="dropdown-button-text">
+          {obtenerTextoBoton()}
+        </span>
+
         <ChevronDown
           size={18}
           strokeWidth={2.4}
@@ -83,9 +134,12 @@ function DropdownCheckbox({
               checked={todosSeleccionados}
               onChange={manejarTodos}
             />
+
             <span>{etiquetaTodos}</span>
           </label>
+
           <div className="dropdown-separador"></div>
+
           {opciones.map((opcion) => (
             <label key={opcion} className="dropdown-item">
               <input
@@ -93,6 +147,7 @@ function DropdownCheckbox({
                 checked={seleccionados.includes(opcion)}
                 onChange={() => manejarCambio(opcion)}
               />
+
               <span>{opcion}</span>
             </label>
           ))}

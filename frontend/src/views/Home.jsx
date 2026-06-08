@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 
-import { BadgeX, BadgeAlert } from "lucide-react";
+import { BadgeAlert, BadgeX } from "lucide-react";
 
 import EventCard from "../components/EventCard.jsx";
 import Header from "../components/Header.jsx";
@@ -40,6 +40,13 @@ function Home() {
   const [busqueda, setBusqueda] = useState("");
   const [fechaSeleccionada, setFechaSeleccionada] = useState(null);
 
+  const [sedesSeleccionadas, setSedesSeleccionadas] = useState([]);
+  const [tiposSeleccionados, setTiposSeleccionados] = useState([]);
+  const [tematicaSeleccionados, setTematicaSeleccionados] = useState([]);
+
+  const [homeStateListo, setHomeStateListo] = useState(false);
+  const [homeRestaurado, setHomeRestaurado] = useState(false);
+
   const sedes = useMemo(
     () =>
       obtenerUnicos(
@@ -60,13 +67,6 @@ function Home() {
     [eventos],
   );
 
-  const [sedesSeleccionadas, setSedesSeleccionadas] = useState([]);
-  const [tiposSeleccionados, setTiposSeleccionados] = useState([]);
-  const [tematicaSeleccionados, setTematicaSeleccionados] = useState([]);
-
-  const [homeStateListo, setHomeStateListo] = useState(false);
-  const [homeRestaurado, setHomeRestaurado] = useState(false);
-
   useEffect(() => {
     async function cargarEventos() {
       try {
@@ -77,6 +77,7 @@ function Home() {
         }
 
         const data = await respuesta.json();
+
         setEventos(data);
       } catch (error) {
         setError(error.message);
@@ -88,8 +89,14 @@ function Home() {
     cargarEventos();
   }, []);
 
+  /*
+    Restaura los filtros y la posición del scroll cuando el usuario
+    vuelve desde el detalle de un evento.
+  */
   useEffect(() => {
-    if (eventos.length === 0) return;
+    if (eventos.length === 0) {
+      return;
+    }
 
     const debeRestaurar =
       sessionStorage.getItem("restaurarHomeEventos") === "true";
@@ -106,6 +113,7 @@ function Home() {
         setSedesSeleccionadas(estado.sedesSeleccionadas ?? sedes);
         setTiposSeleccionados(estado.tiposSeleccionados ?? tipos);
         setTematicaSeleccionados(estado.tematicaSeleccionados ?? tematicas);
+
         setHomeRestaurado(true);
 
         requestAnimationFrame(() => {
@@ -113,30 +121,68 @@ function Home() {
             window.scrollTo(0, estado.scrollY ?? 0);
           });
         });
-
-        sessionStorage.removeItem("restaurarHomeEventos");
-
-        return;
       } catch {
         sessionStorage.removeItem("homeEventosState");
-        sessionStorage.removeItem("restaurarHomeEventos");
       }
+
+      sessionStorage.removeItem("restaurarHomeEventos");
+    } else {
+      setSedesSeleccionadas(sedes);
+      setTiposSeleccionados(tipos);
+      setTematicaSeleccionados(tematicas);
     }
 
-    setSedesSeleccionadas(sedes);
-    setTiposSeleccionados(tipos);
-    setTematicaSeleccionados(tematicas);
+    setHomeStateListo(true);
   }, [eventos.length, sedes, tipos, tematicas]);
+
+  /*
+    Guarda automáticamente el estado actual mientras el usuario
+    permanece en la página.
+  */
+  useEffect(() => {
+    if (!homeStateListo) {
+      return;
+    }
+
+    function guardarEstado() {
+      sessionStorage.setItem(
+        "homeEventosState",
+        JSON.stringify({
+          busqueda,
+          fechaSeleccionada,
+          sedesSeleccionadas,
+          tiposSeleccionados,
+          tematicaSeleccionados,
+          scrollY: window.scrollY,
+        }),
+      );
+    }
+
+    window.addEventListener("scroll", guardarEstado);
+
+    guardarEstado();
+
+    return () => {
+      window.removeEventListener("scroll", guardarEstado);
+    };
+  }, [
+    homeStateListo,
+    busqueda,
+    fechaSeleccionada,
+    sedesSeleccionadas,
+    tiposSeleccionados,
+    tematicaSeleccionados,
+  ]);
 
   const eventosFiltrados = eventos.filter((evento) => {
     const textoEvento = normalizarTexto(`
-    ${evento.nombre}
-    ${evento.descripcion}
-    ${evento.lugar ?? ""}
-    ${evento.modalidad}
-    ${(evento.ubicaciones ?? []).join(" ")}
-    ${(evento.tematicas ?? []).join(" ")}
-  `);
+      ${evento.nombre}
+      ${evento.descripcion}
+      ${evento.lugar ?? ""}
+      ${evento.modalidad}
+      ${(evento.ubicaciones ?? []).join(" ")}
+      ${(evento.tematicas ?? []).join(" ")}
+    `);
 
     const coincideBusqueda = textoEvento.includes(normalizarTexto(busqueda));
 
@@ -192,65 +238,6 @@ function Home() {
     );
   }
 
-  useEffect(() => {
-    if (eventos.length === 0) return;
-
-    const estadoGuardado = sessionStorage.getItem("homeEventosState");
-
-    if (estadoGuardado) {
-      try {
-        const estado = JSON.parse(estadoGuardado);
-
-        setBusqueda(estado.busqueda ?? "");
-        setSedesSeleccionadas(estado.sedesSeleccionadas ?? sedes);
-        setTiposSeleccionados(estado.tiposSeleccionados ?? tipos);
-        setTematicaSeleccionados(estado.tematicaSeleccionados ?? tematicas);
-        setFechaSeleccionada(estado.fechaSeleccionada ?? null);
-
-        setTimeout(() => {
-          window.scrollTo(0, estado.scrollY ?? 0);
-        }, 0);
-
-        return;
-      } catch {
-        sessionStorage.removeItem("homeEventosState");
-      }
-    }
-
-    setSedesSeleccionadas(sedes);
-    setTiposSeleccionados(tipos);
-    setTematicaSeleccionados(tematicas);
-  }, [eventos.length, sedes, tipos, tematicas]);
-
-  useEffect(() => {
-    if (!homeStateListo) return;
-
-    const guardarEstado = () => {
-      sessionStorage.setItem(
-        "homeEventosState",
-        JSON.stringify({
-          busqueda,
-          sedesSeleccionadas,
-          tiposSeleccionados,
-          tematicaSeleccionados,
-          fechaSeleccionada,
-          scrollY: window.scrollY,
-        }),
-      );
-    };
-
-    window.addEventListener("scroll", guardarEstado);
-    guardarEstado();
-
-    return () => window.removeEventListener("scroll", guardarEstado);
-  }, [
-    homeStateListo,
-    busqueda,
-    sedesSeleccionadas,
-    tiposSeleccionados,
-    tematicaSeleccionados,
-    fechaSeleccionada,
-  ]);
   return (
     <>
       <Header />
@@ -277,6 +264,24 @@ function Home() {
                 <button type="submit">Buscar</button>
               </div>
             </form>
+
+            <StickyFilters
+              sedes={sedes}
+              tipos={tipos}
+              tematicas={tematicas}
+              sedesSeleccionadas={sedesSeleccionadas}
+              setSedesSeleccionadas={setSedesSeleccionadas}
+              tiposSeleccionados={tiposSeleccionados}
+              setTiposSeleccionados={setTiposSeleccionados}
+              tematicasSeleccionadas={tematicaSeleccionados}
+              setTematicasSeleccionadas={setTematicaSeleccionados}
+              busqueda={busqueda}
+              setBusqueda={setBusqueda}
+              fechaSeleccionada={fechaSeleccionada}
+              setFechaSeleccionada={setFechaSeleccionada}
+              onLimpiarFiltros={limpiarFiltros}
+              mostrarSeleccionRestaurada={homeRestaurado}
+            />
           </div>
 
           <div className="mini-calendar">
@@ -287,24 +292,6 @@ function Home() {
           </div>
         </div>
       </section>
-
-      <StickyFilters
-        sedes={sedes}
-        tipos={tipos}
-        tematicas={tematicas}
-        sedesSeleccionadas={sedesSeleccionadas}
-        setSedesSeleccionadas={setSedesSeleccionadas}
-        tiposSeleccionados={tiposSeleccionados}
-        setTiposSeleccionados={setTiposSeleccionados}
-        tematicasSeleccionadas={tematicaSeleccionados}
-        setTematicasSeleccionadas={setTematicaSeleccionados}
-        busqueda={busqueda}
-        setBusqueda={setBusqueda}
-        fechaSeleccionada={fechaSeleccionada}
-        setFechaSeleccionada={setFechaSeleccionada}
-        onLimpiarFiltros={limpiarFiltros}
-        mostrarSeleccionRestaurada={homeRestaurado}
-      />
 
       <main className="eventos-main">
         {cargando && (

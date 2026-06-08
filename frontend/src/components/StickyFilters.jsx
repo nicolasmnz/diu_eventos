@@ -37,22 +37,28 @@ function StickyFilters({
       ([entry]) => {
         setModoSticky(!entry.isIntersecting);
       },
-      { threshold: 0 },
+      {
+        threshold: 0,
+      },
     );
 
     if (sentinelRef.current) {
       observer.observe(sentinelRef.current);
     }
 
-    return () => observer.disconnect();
+    return () => {
+      observer.disconnect();
+    };
   }, []);
 
   return (
-    <>
+    <div className="event-filters-wrapper">
       <div ref={sentinelRef} className="filters-sentinel"></div>
 
       <section
-        className={`event-filters ${modoSticky ? "event-filters-sticky" : ""}`}
+        className={`event-filters ${
+          modoSticky ? "event-filters-sticky" : ""
+        }`}
         aria-label="Filtros de eventos"
       >
         {modoSticky && (
@@ -112,12 +118,13 @@ function StickyFilters({
             type="button"
             className="clear-filters-button"
             onClick={onLimpiarFiltros}
+            aria-label="Limpiar filtros"
           >
-            <FunnelX />
+            <FunnelX size={20} />
           </button>
         </div>
       </section>
-    </>
+    </div>
   );
 }
 
