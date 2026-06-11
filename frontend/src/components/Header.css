@@ -99,3 +99,28 @@
   text-transform: uppercase;
   letter-spacing: 0.02em;
 }
+
+@media (max-width: 560px) {
+  .brand-logo-crop {
+  width: 350px;
+  height: 96px;
+  overflow: hidden;
+
+  display: flex;
+  align-items: center;
+}
+
+.brand-logo-crop img {
+  width: 455px;
+  height: auto;
+  display: block;
+
+  transform: translateX(-112px);
+}
+
+.header-section-title {
+  display: flex;
+  align-items: center;
+  transform: translate(-140px, 3px);
+}
+}

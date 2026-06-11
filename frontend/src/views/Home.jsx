@@ -70,7 +70,7 @@ function Home() {
   useEffect(() => {
     async function cargarEventos() {
       try {
-        const respuesta = await fetch("http://localhost:5000/eventos");
+        const respuesta = await fetch("http://10.66.133.116:5000/eventos");
 
         if (!respuesta.ok) {
           throw new Error("No se pudieron cargar los eventos.");

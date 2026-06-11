@@ -67,7 +67,7 @@ function EventDetails() {
   useEffect(() => {
     async function cargarEvento() {
       try {
-        const respuesta = await fetch(`http://localhost:5000/eventos/${slug}`);
+        const respuesta = await fetch(`http://10.66.133.116:5000/eventos/${slug}`);
 
         if (!respuesta.ok) {
           throw new Error("No se pudo cargar el evento.");
