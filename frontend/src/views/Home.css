@@ -251,9 +251,10 @@
   }
 }
 
+/*Celu*/
 @media (max-width: 600px) {
   :root {
-    --mobile-sticky-height: 150px;
+    --mobile-sticky-height: 50px;
   }
 
   html,
@@ -293,13 +294,15 @@
   }
 
   .eventos-main {
-    height: calc(100dvh - var(--mobile-sticky-height));
+    height: 100dvh;
     min-height: 520px;
 
-    padding: 0;
+    padding: var(--mobile-sticky-height) 0 0;
+    box-sizing: border-box;
 
     overflow-y: auto;
     scroll-snap-type: y mandatory;
+    scroll-padding-top: var(--mobile-sticky-height);
     scroll-behavior: smooth;
     overscroll-behavior-y: auto;
     -webkit-overflow-scrolling: touch;
@@ -319,9 +322,9 @@
 
   .event-snap-panel {
     height: calc(100dvh - var(--mobile-sticky-height));
-    min-height: 520px;
+    min-height: 500px;
 
-    padding: 10px 16px 16px;
+    padding: 4px 16px 16px;
     box-sizing: border-box;
 
     display: flex;

@@ -2,7 +2,6 @@ import { useEffect, useRef, useState } from "react";
 import { FunnelX } from "lucide-react";
 
 import DropdownCheckbox from "./DropdownCheckbox.jsx";
-import DateFilter from "./DateFilter.jsx";
 
 import "./StickyFilters.css";
 
@@ -20,9 +19,6 @@ function StickyFilters({
   tematicasSeleccionadas,
   setTematicasSeleccionadas,
 
-  fechaSeleccionada,
-  setFechaSeleccionada,
-
   busqueda,
   setBusqueda,
 
@@ -33,32 +29,69 @@ function StickyFilters({
   const [modoSticky, setModoSticky] = useState(false);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        setModoSticky(!entry.isIntersecting);
-      },
-      {
-        threshold: 0,
-      },
-    );
+    let ticking = false;
 
-    if (sentinelRef.current) {
-      observer.observe(sentinelRef.current);
+    function actualizarModoSticky() {
+      const sentinel = sentinelRef.current;
+
+      if (!sentinel) {
+        ticking = false;
+        return;
+      }
+
+      const topSentinel = sentinel.getBoundingClientRect().top;
+
+      setModoSticky((modoActual) => {
+        /*
+        Activa sticky solo cuando el sentinel ya pasó
+        un poco hacia arriba.
+      */
+        if (!modoActual && topSentinel <= -12) {
+          return true;
+        }
+
+        /*
+        Desactiva sticky solo cuando el sentinel volvió
+        claramente hacia abajo.
+      */
+        if (modoActual && topSentinel >= 24) {
+          return false;
+        }
+
+        return modoActual;
+      });
+
+      ticking = false;
     }
 
+    function manejarScroll() {
+      if (ticking) return;
+
+      ticking = true;
+      requestAnimationFrame(actualizarModoSticky);
+    }
+
+    window.addEventListener("scroll", manejarScroll, { passive: true });
+    window.addEventListener("resize", manejarScroll);
+
+    actualizarModoSticky();
+
     return () => {
-      observer.disconnect();
+      window.removeEventListener("scroll", manejarScroll);
+      window.removeEventListener("resize", manejarScroll);
     };
   }, []);
 
   return (
-    <div className="event-filters-wrapper">
+    <div
+      className={`event-filters-wrapper ${
+        modoSticky ? "event-filters-wrapper-sticky" : ""
+      }`}
+    >
       <div ref={sentinelRef} className="filters-sentinel"></div>
 
       <section
-        className={`event-filters ${
-          modoSticky ? "event-filters-sticky" : ""
-        }`}
+        className={`event-filters ${modoSticky ? "event-filters-sticky" : ""}`}
         aria-label="Filtros de eventos"
       >
         {modoSticky && (
@@ -106,13 +139,6 @@ function StickyFilters({
             setSeleccionados={setTematicasSeleccionadas}
             mostrarSeleccionRestaurada={mostrarSeleccionRestaurada}
           />
-
-          {modoSticky && (
-            <DateFilter
-              fechaSeleccionada={fechaSeleccionada}
-              setFechaSeleccionada={setFechaSeleccionada}
-            />
-          )}
 
           <button
             type="button"

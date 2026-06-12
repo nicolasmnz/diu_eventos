@@ -18,8 +18,7 @@
 
   transition:
     background-color 0.2s ease,
-    box-shadow 0.2s ease,
-    padding 0.2s ease;
+    box-shadow 0.2s ease;
 }
 
 .event-filters-row {
@@ -119,12 +118,18 @@
     minmax(0, 0.8fr)
     minmax(0, 0.8fr)
     minmax(0, 0.8fr)
-    minmax(150px, 0.8fr)
     48px;
+}
+
+.event-filters-wrapper-sticky {
+  min-height: 70px;
 }
 
 /* Celular */
 @media (max-width: 600px) {
+  .event-filters-wrapper-sticky {
+    min-height: 136px;
+  }
   .event-filters {
     width: 100%;
     margin: 0;
