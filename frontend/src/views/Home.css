@@ -54,8 +54,6 @@
 }
 
 .banner-left-tools {
-
-
   width: 100%;
   max-width: 830px;
   min-width: 0;
@@ -138,8 +136,11 @@
 }
 
 .eventos-main {
-  min-height: 400px;
-  padding: 34px 0 64px;
+  min-height: auto;
+
+  padding: 28px 0 64px;
+
+  overflow: visible;
 
   background-color: #f7f7f7;
 }
@@ -207,6 +208,10 @@
   color: #f7ae00;
 }
 
+.home-footer-snap {
+  width: 100%;
+}
+
 /* Tablet */
 @media (max-width: 900px) {
   .banner-eventos {
@@ -246,17 +251,26 @@
   }
 }
 
-/* Celular */
 @media (max-width: 600px) {
+  :root {
+    --mobile-sticky-height: 150px;
+  }
+
+  html,
+  body {
+    scroll-snap-type: none;
+    scroll-behavior: smooth;
+  }
+
   .banner-eventos {
-    height: 550px;
+    height: 450px;
   }
 
   .banner-tools {
     justify-content: flex-start;
 
-    padding: 26px 16px 18px;
-    gap: 20px;
+    padding: 18px 16px 16px;
+    gap: 16px;
   }
 
   .banner-left-tools {
@@ -265,25 +279,57 @@
   }
 
   .search-box {
-    height: 52px;
+    height: 48px;
   }
 
   .search-box input {
     padding: 0 14px;
-
-    font-size: 0.88rem;
+    font-size: 0.86rem;
   }
 
   .search-box button {
-    padding: 0 16px;
+    padding: 0 14px;
+    font-size: 0.8rem;
+  }
 
-    font-size: 0.82rem;
+  .eventos-main {
+    height: calc(100dvh - var(--mobile-sticky-height));
+    min-height: 520px;
+
+    padding: 0;
+
+    overflow-y: auto;
+    scroll-snap-type: y mandatory;
+    scroll-behavior: smooth;
+    overscroll-behavior-y: auto;
+    -webkit-overflow-scrolling: touch;
+
+    background-color: #f7f7f7;
   }
 
   .eventos-grid {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 18px;
+    width: 100%;
+    margin: 0;
+    padding: 0;
 
-    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .event-snap-panel {
+    height: calc(100dvh - var(--mobile-sticky-height));
+    min-height: 520px;
+
+    padding: 10px 16px 16px;
+    box-sizing: border-box;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    scroll-snap-align: start;
+    scroll-snap-stop: always;
+    flex-shrink: 0;
   }
 }

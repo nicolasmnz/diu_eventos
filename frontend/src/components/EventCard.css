@@ -210,18 +210,113 @@
   box-shadow: 0 14px 32px rgba(0, 0, 0, 0.22);
 }
 
-@media (max-width: 480px) {
+@media (max-width: 600px) {
   .card {
+    width: 100%;
     max-width: 100%;
-    height: auto;
-    min-height: 600px;
+
+    height: min(500px, calc(100dvh - 250px));
+    min-height: 460px;
+
+    border-radius: 16px;
+    overflow: hidden;
+
+    background-color: white;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
+  }
+
+  .card:hover {
+    transform: none;
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
+  }
+
+  .card:active {
+    transform: scale(0.99);
   }
 
   .card-img-top {
-    height: 260px;
+    height: 190px;
+    object-fit: cover;
+  }
+
+  .card-short-date {
+    width: 58px;
+    height: 68px;
+
+    margin-left: 16px;
+    margin-top: -34px;
+    margin-bottom: 10px;
+  }
+
+  .month {
+    font-size: 0.78rem;
+  }
+
+  .day {
+    font-size: 1.55rem;
+  }
+
+  .widget,
+  .theme-chip {
+    padding-left: 16px;
+    padding-right: 16px;
+    gap: 7px;
+  }
+
+  .widget {
+    padding-top: 4px;
+    padding-bottom: 4px;
+  }
+
+  .theme-chip {
+    padding-top: 0;
+    padding-bottom: 10px;
+  }
+
+  .widget span,
+  .theme-chip span {
+    font-size: 0.68rem;
+    padding: 5px 10px;
+    line-height: 1.15;
+  }
+
+  .card-body {
+    padding: 4px 16px 68px;
   }
 
   .card-title {
-    font-size: 1.35rem;
+    margin: 0 0 8px;
+
+    font-size: 1.08rem;
+    line-height: 1.18;
+    min-height: auto;
+  }
+
+  .card-title-medium {
+    font-size: 1rem;
+  }
+
+  .card-title-small {
+    font-size: 0.92rem;
+  }
+
+  .hour {
+    margin: 0;
+    font-size: 0.95rem;
+    line-height: 1.2;
+  }
+
+  .card-footer {
+    right: 16px;
+    bottom: 16px;
+  }
+
+  .card-actions {
+    gap: 8px;
+  }
+
+  .card-action-button {
+    width: 42px;
+    height: 42px;
   }
 }

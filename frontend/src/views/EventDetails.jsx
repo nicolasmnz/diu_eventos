@@ -11,6 +11,7 @@ import {
 } from "lucide-react";
 
 import Header from "../components/Header.jsx";
+import Footer from "../components/Footer.jsx";
 import ShareModal from "../components/ShareModal";
 import SaveModal from "../components/SaveModal";
 
@@ -67,7 +68,8 @@ function EventDetails() {
   useEffect(() => {
     async function cargarEvento() {
       try {
-        const respuesta = await fetch(`http://10.66.133.116:5000/eventos/${slug}`);
+        const API_URL = `http://${window.location.hostname}:5000`;
+        const respuesta = await fetch(`${API_URL}/eventos/${slug}`);
 
         if (!respuesta.ok) {
           throw new Error("No se pudo cargar el evento.");
@@ -202,6 +204,9 @@ function EventDetails() {
             calendario={calendario}
           />
         </section>
+        <div className="home-footer-snap">
+          <Footer />
+        </div>
       </main>
     </>
   );

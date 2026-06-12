@@ -6,6 +6,7 @@ import EventCard from "../components/EventCard.jsx";
 import Header from "../components/Header.jsx";
 import MiniCalendar from "../components/MiniCalendar.jsx";
 import StickyFilters from "../components/StickyFilters.jsx";
+import Footer from "../components/Footer.jsx";
 
 import "./Home.css";
 
@@ -70,14 +71,14 @@ function Home() {
   useEffect(() => {
     async function cargarEventos() {
       try {
-        const respuesta = await fetch("http://10.66.133.116:5000/eventos");
+        const API_URL = `http://${window.location.hostname}:5000`;
+        const respuesta = await fetch(`${API_URL}/eventos`);
 
         if (!respuesta.ok) {
           throw new Error("No se pudieron cargar los eventos.");
         }
 
         const data = await respuesta.json();
-
         setEventos(data);
       } catch (error) {
         setError(error.message);
@@ -319,15 +320,22 @@ function Home() {
         )}
 
         {!cargando && !error && eventosFiltrados.length > 0 && (
-          <section className="eventos-grid">
-            {eventosFiltrados.map((evento) => (
-              <EventCard
-                key={evento.id}
-                evento={evento}
-                onAntesAbrirDetalle={guardarEstadoHome}
-              />
-            ))}
-          </section>
+          <>
+            <section className="eventos-grid">
+              {eventosFiltrados.map((evento) => (
+                <div key={evento.id} className="event-snap-panel">
+                  <EventCard
+                    evento={evento}
+                    onAntesAbrirDetalle={guardarEstadoHome}
+                  />
+                </div>
+              ))}
+            </section>
+
+            <div className="home-footer-snap">
+              <Footer />
+            </div>
+          </>
         )}
       </main>
     </>

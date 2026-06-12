@@ -2,7 +2,6 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Home from "./views/Home";
 import EventDetails from "./views/EventDetails.jsx";
-import Footer from "./components/Footer.jsx";
 
 function App() {
   return (
@@ -11,7 +10,6 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/eventos/:slug" element={<EventDetails />} />
       </Routes>
-      <Footer />
     </BrowserRouter>
   );
 }
