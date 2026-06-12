@@ -128,8 +128,9 @@
 /* Celular */
 @media (max-width: 600px) {
   .event-filters-wrapper-sticky {
-    min-height: 136px;
+    min-height: var(--mobile-sticky-height);
   }
+
   .event-filters {
     width: 100%;
     margin: 0;

@@ -24,6 +24,7 @@ function StickyFilters({
 
   onLimpiarFiltros,
   mostrarSeleccionRestaurada,
+  onStickyChange,
 }) {
   const sentinelRef = useRef(null);
   const [modoSticky, setModoSticky] = useState(false);
@@ -81,6 +82,10 @@ function StickyFilters({
       window.removeEventListener("resize", manejarScroll);
     };
   }, []);
+
+  useEffect(() => {
+    onStickyChange?.(modoSticky);
+  }, [modoSticky, onStickyChange]);
 
   return (
     <div

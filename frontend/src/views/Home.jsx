@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import { BadgeAlert, BadgeX } from "lucide-react";
 
@@ -34,6 +34,15 @@ function fechaEstaEnRango(fechaSeleccionada, fechaInicio, fechaTermino) {
 }
 
 function Home() {
+  const snapEnCursoRef = useRef(false);
+
+  const gestoRef = useRef({
+    yInicial: null,
+    indiceInicial: 0,
+    direccion: 0,
+    activo: false,
+  });
+
   const [eventos, setEventos] = useState([]);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
@@ -99,41 +108,51 @@ function Home() {
       return;
     }
 
-    const debeRestaurar =
-      sessionStorage.getItem("restaurarHomeEventos") === "true";
+    let cancelado = false;
 
-    const estadoGuardado = sessionStorage.getItem("homeEventosState");
+    requestAnimationFrame(() => {
+      if (cancelado) {
+        return;
+      }
 
-    if (debeRestaurar && estadoGuardado) {
-      try {
-        const estado = JSON.parse(estadoGuardado);
+      const debeRestaurar =
+        sessionStorage.getItem("restaurarHomeEventos") === "true";
 
-        setBusqueda(estado.busqueda ?? "");
-        setFechaSeleccionada(estado.fechaSeleccionada ?? null);
+      const estadoGuardado = sessionStorage.getItem("homeEventosState");
 
-        setSedesSeleccionadas(estado.sedesSeleccionadas ?? sedes);
-        setTiposSeleccionados(estado.tiposSeleccionados ?? tipos);
-        setTematicaSeleccionados(estado.tematicaSeleccionados ?? tematicas);
+      if (debeRestaurar && estadoGuardado) {
+        try {
+          const estado = JSON.parse(estadoGuardado);
 
-        setHomeRestaurado(true);
+          setBusqueda(estado.busqueda ?? "");
+          setFechaSeleccionada(estado.fechaSeleccionada ?? null);
 
-        requestAnimationFrame(() => {
+          setSedesSeleccionadas(estado.sedesSeleccionadas ?? sedes);
+          setTiposSeleccionados(estado.tiposSeleccionados ?? tipos);
+          setTematicaSeleccionados(estado.tematicaSeleccionados ?? tematicas);
+
+          setHomeRestaurado(true);
+
           requestAnimationFrame(() => {
             window.scrollTo(0, estado.scrollY ?? 0);
           });
-        });
-      } catch {
-        sessionStorage.removeItem("homeEventosState");
+        } catch {
+          sessionStorage.removeItem("homeEventosState");
+        }
+
+        sessionStorage.removeItem("restaurarHomeEventos");
+      } else {
+        setSedesSeleccionadas(sedes);
+        setTiposSeleccionados(tipos);
+        setTematicaSeleccionados(tematicas);
       }
 
-      sessionStorage.removeItem("restaurarHomeEventos");
-    } else {
-      setSedesSeleccionadas(sedes);
-      setTiposSeleccionados(tipos);
-      setTematicaSeleccionados(tematicas);
-    }
+      setHomeStateListo(true);
+    });
 
-    setHomeStateListo(true);
+    return () => {
+      cancelado = true;
+    };
   }, [eventos.length, sedes, tipos, tematicas]);
 
   /*
@@ -213,6 +232,238 @@ function Home() {
       coincideFecha
     );
   });
+
+  useEffect(() => {
+    const esMobile = window.matchMedia("(max-width: 600px)").matches;
+
+    if (!esMobile) {
+      return;
+    }
+
+    function obtenerAlturaSticky() {
+      const valor = getComputedStyle(document.documentElement)
+        .getPropertyValue("--mobile-sticky-height")
+        .replace("px", "")
+        .trim();
+
+      return Number(valor) || 136;
+    }
+
+    function obtenerPaneles() {
+      return Array.from(document.querySelectorAll(".event-snap-panel"));
+    }
+
+    function esElementoInteractivo(target) {
+      return Boolean(
+        target.closest(
+          "button, input, textarea, select, a, .dropdown-menu, .dropdown-button, .event-filters-sticky",
+        ),
+      );
+    }
+
+    function obtenerIndiceMasCercano() {
+      const alturaSticky = obtenerAlturaSticky();
+      const paneles = obtenerPaneles();
+
+      let indiceMasCercano = 0;
+      let menorDistancia = Infinity;
+
+      paneles.forEach((panel, index) => {
+        const distancia = Math.abs(
+          panel.getBoundingClientRect().top - alturaSticky,
+        );
+
+        if (distancia < menorDistancia) {
+          menorDistancia = distancia;
+          indiceMasCercano = index;
+        }
+      });
+
+      return indiceMasCercano;
+    }
+
+    function moverATarjeta(indice) {
+      const alturaSticky = obtenerAlturaSticky();
+      const paneles = obtenerPaneles();
+
+      if (!paneles[indice]) {
+        return;
+      }
+
+      const destino =
+        window.scrollY +
+        paneles[indice].getBoundingClientRect().top -
+        alturaSticky;
+
+      snapEnCursoRef.current = true;
+
+      window.scrollTo({
+        top: destino,
+        behavior: "smooth",
+      });
+
+      window.setTimeout(() => {
+        snapEnCursoRef.current = false;
+      }, 420);
+    }
+
+    function manejarTouchStart(event) {
+      if (snapEnCursoRef.current) {
+        return;
+      }
+
+      if (esElementoInteractivo(event.target)) {
+        gestoRef.current = {
+          yInicial: null,
+          indiceInicial: 0,
+          direccion: 0,
+          activo: false,
+        };
+
+        return;
+      }
+
+      const paneles = obtenerPaneles();
+
+      if (paneles.length === 0) {
+        return;
+      }
+
+      const alturaSticky = obtenerAlturaSticky();
+      const primerPanelTop = paneles[0].getBoundingClientRect().top;
+
+      /*
+      Si todavía estás en header/banner, dejamos que el scroll normal
+      baje la página y active el sticky. No intervenimos todavía.
+    */
+      if (primerPanelTop > alturaSticky + 80) {
+        gestoRef.current = {
+          yInicial: null,
+          indiceInicial: 0,
+          direccion: 0,
+          activo: false,
+        };
+
+        return;
+      }
+
+      gestoRef.current = {
+        yInicial: event.touches[0].clientY,
+        indiceInicial: obtenerIndiceMasCercano(),
+        direccion: 0,
+        activo: true,
+      };
+    }
+
+    function manejarTouchMove(event) {
+      if (!gestoRef.current.activo || gestoRef.current.yInicial === null) {
+        return;
+      }
+
+      const paneles = obtenerPaneles();
+
+      if (paneles.length === 0) {
+        return;
+      }
+
+      const yActual = event.touches[0].clientY;
+      const diferencia = gestoRef.current.yInicial - yActual;
+
+      if (Math.abs(diferencia) < 14) {
+        return;
+      }
+
+      const direccion = diferencia > 0 ? 1 : -1;
+      const indiceInicial = gestoRef.current.indiceInicial;
+
+      /*
+      Si estás en la primera tarjeta y haces gesto hacia arriba,
+      dejamos volver naturalmente al banner/header.
+    */
+      if (indiceInicial === 0 && direccion === -1) {
+        gestoRef.current.activo = false;
+        return;
+      }
+
+      /*
+      Si estás en la última tarjeta y haces gesto hacia abajo,
+      dejamos continuar hacia el footer.
+    */
+      if (indiceInicial === paneles.length - 1 && direccion === 1) {
+        gestoRef.current.activo = false;
+        return;
+      }
+
+      /*
+      Esta línea es la importante:
+      elimina la inercia nativa del navegador, para que un gesto fuerte
+      no pueda saltarse varias tarjetas.
+    */
+      event.preventDefault();
+
+      gestoRef.current.direccion = direccion;
+    }
+
+    function manejarTouchEnd() {
+      if (!gestoRef.current.activo) {
+        return;
+      }
+
+      const paneles = obtenerPaneles();
+
+      if (paneles.length === 0) {
+        return;
+      }
+
+      const { indiceInicial, direccion } = gestoRef.current;
+
+      gestoRef.current = {
+        yInicial: null,
+        indiceInicial: 0,
+        direccion: 0,
+        activo: false,
+      };
+
+      if (direccion === 0) {
+        return;
+      }
+
+      let indiceDestino = indiceInicial + direccion;
+
+      if (indiceDestino < 0) {
+        indiceDestino = 0;
+      }
+
+      if (indiceDestino >= paneles.length) {
+        indiceDestino = paneles.length - 1;
+      }
+
+      moverATarjeta(indiceDestino);
+    }
+
+    window.addEventListener("touchstart", manejarTouchStart, {
+      passive: true,
+    });
+
+    /*
+    Este NO puede ser passive:true.
+    Si es passive:true, preventDefault() no funciona y vuelve
+    la inercia que hace saltar varias tarjetas.
+  */
+    window.addEventListener("touchmove", manejarTouchMove, {
+      passive: false,
+    });
+
+    window.addEventListener("touchend", manejarTouchEnd, {
+      passive: true,
+    });
+
+    return () => {
+      window.removeEventListener("touchstart", manejarTouchStart);
+      window.removeEventListener("touchmove", manejarTouchMove);
+      window.removeEventListener("touchend", manejarTouchEnd);
+    };
+  }, [eventosFiltrados.length]);
 
   function limpiarFiltros() {
     setBusqueda("");

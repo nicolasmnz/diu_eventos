@@ -2,7 +2,7 @@
   position: relative;
 
   width: 100%;
-  height: 550px;
+  height: 400px;
 
   overflow: visible;
 }
@@ -251,16 +251,20 @@
   }
 }
 
-/*Celu*/
+/* Celu */
 @media (max-width: 600px) {
   :root {
-    --mobile-sticky-height: 50px;
+    --mobile-sticky-height: 136px;
   }
 
-  html,
+  html {
+    scroll-behavior: smooth;
+    scroll-padding-top: var(--mobile-sticky-height);
+  }
+
   body {
     scroll-snap-type: none;
-    scroll-behavior: smooth;
+    overscroll-behavior-y: auto;
   }
 
   .banner-eventos {
@@ -294,18 +298,11 @@
   }
 
   .eventos-main {
-    height: 100dvh;
-    min-height: 520px;
+    min-height: auto;
 
-    padding: var(--mobile-sticky-height) 0 0;
-    box-sizing: border-box;
+    padding: 0;
 
-    overflow-y: auto;
-    scroll-snap-type: y mandatory;
-    scroll-padding-top: var(--mobile-sticky-height);
-    scroll-behavior: smooth;
-    overscroll-behavior-y: auto;
-    -webkit-overflow-scrolling: touch;
+    overflow: visible;
 
     background-color: #f7f7f7;
   }
@@ -321,18 +318,27 @@
   }
 
   .event-snap-panel {
-    height: calc(100dvh - var(--mobile-sticky-height));
-    min-height: 500px;
+    min-height: calc(100dvh - var(--mobile-sticky-height));
 
-    padding: 4px 16px 16px;
+    padding: 6px 16px 16px;
     box-sizing: border-box;
 
     display: flex;
     align-items: center;
     justify-content: center;
 
+    scroll-margin-top: var(--mobile-sticky-height);
     scroll-snap-align: start;
     scroll-snap-stop: always;
-    flex-shrink: 0;
+  }
+
+  .home-footer-snap {
+    scroll-margin-top: var(--mobile-sticky-height);
+  }
+
+  .banner-tools:has(.event-filters-sticky) .mini-calendar {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
   }
 }
