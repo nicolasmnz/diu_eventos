@@ -194,15 +194,15 @@ function Home() {
     tematicaSeleccionados,
   ]);
 
-  const eventosFiltrados = eventos.filter((evento) => {
+  const eventosParaCalendario = eventos.filter((evento) => {
     const textoEvento = normalizarTexto(`
-      ${evento.nombre}
-      ${evento.descripcion}
-      ${evento.lugar ?? ""}
-      ${evento.modalidad}
-      ${(evento.ubicaciones ?? []).join(" ")}
-      ${(evento.tematicas ?? []).join(" ")}
-    `);
+    ${evento.nombre}
+    ${evento.descripcion}
+    ${evento.lugar ?? ""}
+    ${evento.modalidad}
+    ${(evento.ubicaciones ?? []).join(" ")}
+    ${(evento.tematicas ?? []).join(" ")}
+  `);
 
     const coincideBusqueda = textoEvento.includes(normalizarTexto(busqueda));
 
@@ -218,20 +218,18 @@ function Home() {
       tematicaSeleccionados.includes(tematica),
     );
 
-    const coincideFecha = fechaEstaEnRango(
+    return (
+      coincideBusqueda && coincideSede && coincideModalidad && coincideTematica
+    );
+  });
+
+  const eventosFiltrados = eventosParaCalendario.filter((evento) =>
+    fechaEstaEnRango(
       fechaSeleccionada,
       evento.fechaInicio,
       evento.fechaTermino,
-    );
-
-    return (
-      coincideBusqueda &&
-      coincideSede &&
-      coincideModalidad &&
-      coincideTematica &&
-      coincideFecha
-    );
-  });
+    ),
+  );
 
   useEffect(() => {
     const esMobile = window.matchMedia("(max-width: 600px)").matches;
@@ -540,6 +538,7 @@ function Home() {
             <MiniCalendar
               fechaSeleccionada={fechaSeleccionada}
               setFechaSeleccionada={setFechaSeleccionada}
+              eventos={eventosParaCalendario}
             />
           </div>
         </div>

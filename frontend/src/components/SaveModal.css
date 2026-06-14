@@ -45,7 +45,7 @@
 }
 
 .save-modal-close:hover {
-  background-color: #002855;
+  background-color: #004b85;
   color: white;
 }
 
@@ -91,10 +91,12 @@
   background-color: #f1f1f1;
   color: #222;
 
-  display: flex;
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr);
   align-items: center;
-  justify-content: center;
-  gap: 12px;
+  column-gap: 12px;
+
+  padding: 0 45px;
 
   font-weight: 800;
   cursor: pointer;
@@ -118,10 +120,17 @@
 }
 
 .save-modal-options button svg {
+  width: 30px;
+  height: 30px;
+
+  justify-self: center;
   flex-shrink: 0;
 }
 
 .save-modal-options button span {
+  min-width: 0;
+
+  text-align: left;
   line-height: 1.2;
   font-size: 0.88rem;
 }
@@ -150,4 +159,34 @@
 .save-modal-resume-item svg {
   color: #002855;
   flex-shrink: 0;
+}
+
+@media (max-width: 600px) {
+  .save-modal-backdrop {
+    padding: 18px;
+  }
+
+  .save-modal {
+    width: 100%;
+    padding: 28px 20px;
+  }
+
+  .save-modal-options button {
+    width: 100%;
+    height: 58px;
+
+    grid-template-columns: 40px minmax(0, 1fr);
+    column-gap: 10px;
+
+    padding: 0 18px;
+  }
+
+  .save-modal-options button svg {
+    width: 28px;
+    height: 28px;
+  }
+
+  .save-modal-options button span {
+    font-size: 0.82rem;
+  }
 }

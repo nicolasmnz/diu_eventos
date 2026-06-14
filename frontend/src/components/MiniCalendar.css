@@ -31,7 +31,7 @@
   align-items: center;
   gap: 8px;
 
-  background-color: #002855;
+  background-color: #004b85;
   color: white;
 }
 
@@ -81,8 +81,7 @@
   padding: 10px 0;
 
   text-align: center;
-  color: #006b9a;
-
+  color: #004b85;
   font-size: 0.75rem;
   font-weight: 800;
   text-transform: uppercase;
@@ -97,6 +96,8 @@
 }
 
 .date {
+  position: relative;
+
   width: min(36px, 100%);
   aspect-ratio: 1 / 1;
   margin: auto;
@@ -123,14 +124,31 @@
     transform 0.2s ease;
 }
 
+.date.has-event::before {
+  content: "";
+
+  position: absolute;
+  top: 3px;
+  left: 50%;
+
+  width: 5px;
+  height: 5px;
+
+  border-radius: 999px;
+
+  background-color: #004b85;
+
+  transform: translateX(-50%);
+}
+
 .date.active {
   border-color: #f7ae00;
   color: black;
 }
 
 .date.selected {
-  background-color: #006b9a;
-  border-color: #006b9a;
+  background-color: #004b85;
+  border-color: #004b85;
   color: white;
 }
 
@@ -140,9 +158,18 @@
   color: white;
 }
 
+.date.selected.has-event::before,
+.date.active.selected.has-event::before {
+  background-color: white;
+}
+
 .date.inactive {
   color: #c9c9c9;
   cursor: default;
+}
+
+.date.inactive.has-event::before {
+  display: none;
 }
 
 .date.inactive:hover {

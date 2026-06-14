@@ -78,6 +78,11 @@
 
   width: 100%;
 
+  max-height: min(360px, calc(100dvh - 140px));
+  overflow-y: auto;
+  overscroll-behavior-y: contain;
+  scrollbar-gutter: stable;
+
   background-color: white;
   border: 1px solid #e5e5e5;
   border-radius: 12px;
@@ -175,5 +180,9 @@
   .event-filters-row .dropdown:nth-child(3) .dropdown-menu {
     right: 0;
     left: auto;
+  }
+
+  .event-filters-sticky .dropdown-menu {
+    max-height: min(360px, calc(100dvh - 150px));
   }
 }

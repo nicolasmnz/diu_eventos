@@ -18,7 +18,11 @@ const monthNames = [
 
 const dayNames = ["LU", "MA", "MI", "JU", "VI", "SA", "DO"];
 
-function MiniCalendar({ fechaSeleccionada, setFechaSeleccionada }) {
+function MiniCalendar({
+  fechaSeleccionada,
+  setFechaSeleccionada,
+  eventos = [],
+}) {
   const today = new Date();
 
   const [currentDate, setCurrentDate] = useState(
@@ -79,6 +83,56 @@ function MiniCalendar({ fechaSeleccionada, setFechaSeleccionada }) {
     const fecha = crearFechaISO(year, month, day);
     return fechaSeleccionada === fecha;
   }
+
+  function calcularDiasEntre(fechaInicio, fechaTermino) {
+    const inicio = new Date(`${fechaInicio}T00:00:00`);
+    const termino = new Date(`${fechaTermino}T00:00:00`);
+
+    return Math.round((termino - inicio) / (1000 * 60 * 60 * 24)) + 1;
+  }
+
+  function tieneEvento(day) {
+    if (!day) {
+      return false;
+    }
+
+    const fecha = crearFechaISO(year, month, day);
+
+    return eventos.some((evento) => {
+      if (!evento.fechaInicio) {
+        return false;
+      }
+
+      const inicio = evento.fechaInicio;
+      const termino = evento.fechaTermino || evento.fechaInicio;
+
+      /*
+      Para eventos de un solo día:
+      marcamos solo ese día.
+    */
+      if (inicio === termino) {
+        return fecha === inicio;
+      }
+
+      /*
+      Para eventos cortos de varios días:
+      marcamos todos los días del rango.
+      Ejemplo: congreso del 4 al 5 de junio.
+    */
+      const duracionDias = calcularDiasEntre(inicio, termino);
+
+      if (duracionDias <= 7) {
+        return fecha >= inicio && fecha <= termino;
+      }
+
+      /*
+      Para eventos con rango muy largo:
+      marcamos solo inicio y término.
+      Esto evita que un evento como mayo-octubre pinte todo el calendario.
+    */
+      return fecha === inicio || fecha === termino;
+    });
+  }
   return (
     <article className="calendar">
       <header className="calendar-header">
@@ -109,8 +163,10 @@ function MiniCalendar({ fechaSeleccionada, setFechaSeleccionada }) {
             key={index}
             type="button"
             className={`date ${!day ? "inactive" : ""} ${
-              esHoy(day) ? "active" : ""
-            } ${estaSeleccionado(day) ? "selected" : ""}`}
+              day && esHoy(day) ? "active" : ""
+            } ${day && estaSeleccionado(day) ? "selected" : ""} ${
+              day && tieneEvento(day) ? "has-event" : ""
+            }`}
             disabled={!day}
             onClick={() => manejarSeleccionDia(day)}
           >

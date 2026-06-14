@@ -10,7 +10,7 @@
     "horaTermino": null,
     "publicoObjetivo": "Todo público",
     "modalidad": "Presencial",
-    "ubicaciones": ["Todos"],
+    "ubicaciones": ["Todos los emplazamientos"],
     "lugar": [
       "Campus Campus Casa Central Valparaíso",
       "Campus San Joaquín",
