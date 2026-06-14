@@ -1,4 +1,7 @@
 import { useEffect, useState } from "react";
+
+import { API_URL } from "../config/api.js";
+
 import { useParams } from "react-router-dom";
 import {
   ChevronRight,
@@ -68,7 +71,6 @@ function EventDetails() {
   useEffect(() => {
     async function cargarEvento() {
       try {
-        const API_URL = `http://${window.location.hostname}:5000`;
         const respuesta = await fetch(`${API_URL}/eventos/${slug}`);
 
         if (!respuesta.ok) {
@@ -92,7 +94,13 @@ function EventDetails() {
   if (!evento) return <p>Evento no encontrado.</p>;
 
   const calendario = evento.calendario;
-  const urlCompartir = `${window.location.origin}${evento.ruta}`;
+  const share = evento.share ?? {
+    title: evento.nombre,
+    text: `Revisa este evento: ${evento.nombre}`,
+    url: `${window.location.origin}${evento.ruta}`,
+  };
+
+  const urlCompartir = share.url;
 
   return (
     <>
@@ -194,7 +202,8 @@ function EventDetails() {
           <ShareModal
             abierto={modalCompartirAbierto}
             onCerrar={() => setModalCompartirAbierto(false)}
-            titulo={evento.nombre}
+            titulo={share.title}
+            texto={share.text}
             url={urlCompartir}
           />
 

@@ -76,7 +76,13 @@ function EventCard({ evento, onAntesAbrirDetalle }) {
     return "Por confirmar";
   }
 
-  const urlCompartir = `${window.location.origin}/eventos/${evento.slug}`;
+  const share = evento.share ?? {
+    title: evento.nombre,
+    text: `Revisa este evento: ${evento.nombre}`,
+    url: `${window.location.origin}/eventos/${evento.slug}`,
+  };
+
+  const urlCompartir = share.url;
 
   return (
     <article
@@ -140,7 +146,8 @@ function EventCard({ evento, onAntesAbrirDetalle }) {
       <ShareModal
         abierto={modalCompartirAbierto}
         onCerrar={() => setModalCompartirAbierto(false)}
-        titulo={evento.nombre}
+        titulo={share.title}
+        texto={share.text}
         url={urlCompartir}
       />
 

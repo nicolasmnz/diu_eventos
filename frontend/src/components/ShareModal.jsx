@@ -14,7 +14,7 @@ import { FaXTwitter } from "react-icons/fa6";
 
 import "./ShareModal.css";
 
-function ShareModal({ abierto, onCerrar, titulo, url }) {
+function ShareModal({ abierto, onCerrar, titulo, texto, url }) {
   const urlRef = useRef(null);
   const [copiado, setCopiado] = useState(false);
 
@@ -32,6 +32,13 @@ function ShareModal({ abierto, onCerrar, titulo, url }) {
   }, [abierto, onCerrar]);
 
   if (!abierto) return null;
+
+  /*prepara el texto para WhatsApp, LinkedIn y el menú nativo.*/
+  const textoCompartir = texto || `Revisa este evento: ${titulo}`;
+  const textoConUrl = `${textoCompartir}\n${url}`;
+
+  const textoCodificado = encodeURIComponent(textoConUrl);
+  const urlCodificada = encodeURIComponent(url);
 
   async function copiarLink() {
     try {
@@ -53,6 +60,62 @@ function ShareModal({ abierto, onCerrar, titulo, url }) {
     } catch {
       console.log("No se pudo copiar el enlace");
     }
+  }
+
+  function abrirVentanaCompartir(urlCompartir) {
+    window.open(urlCompartir, "_blank", "noopener,noreferrer");
+  }
+
+  function compartirPorCorreo() {
+    const asunto = encodeURIComponent(`Evento: ${titulo}`);
+    const cuerpo = encodeURIComponent(textoConUrl);
+
+    window.location.href = `mailto:?subject=${asunto}&body=${cuerpo}`;
+  }
+
+  function compartirPorLinkedIn() {
+    abrirVentanaCompartir(
+      `https://www.linkedin.com/sharing/share-offsite/?url=${urlCodificada}`,
+    );
+  }
+
+  function compartirPorX() {
+    abrirVentanaCompartir(
+      `https://x.com/intent/tweet?text=${encodeURIComponent(
+        textoCompartir,
+      )}&url=${urlCodificada}`,
+    );
+  }
+
+  function compartirPorWhatsapp() {
+    abrirVentanaCompartir(`https://wa.me/?text=${textoCodificado}`);
+  }
+
+  function compartirPorFacebook() {
+    abrirVentanaCompartir(
+      `https://www.facebook.com/sharer/sharer.php?u=${urlCodificada}`,
+    );
+  }
+
+  async function compartirPorInstagram() {
+    if (navigator.share) {
+      try {
+        await navigator.share({
+          title: titulo,
+          text: textoCompartir,
+          url,
+        });
+
+        return;
+      } catch {
+        /*
+        Puede fallar si el usuario cancela el menú de compartir.
+        En ese caso usamos copiarLink como respaldo.
+      */
+      }
+    }
+
+    await copiarLink();
   }
 
   return createPortal(
@@ -79,26 +142,60 @@ function ShareModal({ abierto, onCerrar, titulo, url }) {
         </header>
 
         <div className="share-modal-options">
-          <button type="button">
-            <FaEnvelope size={21} strokeWidth={2.2} />
+          <button
+            type="button"
+            onClick={compartirPorCorreo}
+            aria-label="Compartir por correo"
+            title="Correo"
+          >
+            <FaEnvelope size={21} />
           </button>
-          <button type="button">
-            <FaLinkedinIn size={22} strokeWidth={2.2} />
+
+          <button
+            type="button"
+            onClick={compartirPorLinkedIn}
+            aria-label="Compartir en LinkedIn"
+            title="LinkedIn"
+          >
+            <FaLinkedinIn size={22} />
           </button>
-          <button type="button">
-            <FaXTwitter size={22} strokeWidth={2.2} />
+
+          <button
+            type="button"
+            onClick={compartirPorX}
+            aria-label="Compartir en X"
+            title="X"
+          >
+            <FaXTwitter size={22} />
           </button>
-          <button type="button">
-            <FaWhatsapp size={25} strokeWidth={2.2} />
+
+          <button
+            type="button"
+            onClick={compartirPorWhatsapp}
+            aria-label="Compartir por WhatsApp"
+            title="WhatsApp"
+          >
+            <FaWhatsapp size={25} />
           </button>
-          <button type="button">
-            <FaInstagram size={25} strokeWidth={2.2} />
+
+          <button
+            type="button"
+            onClick={compartirPorInstagram}
+            aria-label="Compartir en Instagram"
+            title="Instagram"
+          >
+            <FaInstagram size={25} />
           </button>
-          <button type="button">
-            <FaFacebook size={23} strokeWidth={2.2} />
+
+          <button
+            type="button"
+            onClick={compartirPorFacebook}
+            aria-label="Compartir en Facebook"
+            title="Facebook"
+          >
+            <FaFacebook size={23} />
           </button>
         </div>
-
         <div className="share-modal-link">
           <span ref={urlRef}>{url}</span>
           <button type="button" onClick={copiarLink}>

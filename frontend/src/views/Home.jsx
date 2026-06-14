@@ -1,4 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from "react";
+import { API_URL } from "../config/api.js";
 
 import { BadgeAlert, BadgeX } from "lucide-react";
 
@@ -80,7 +81,6 @@ function Home() {
   useEffect(() => {
     async function cargarEventos() {
       try {
-        const API_URL = `http://${window.location.hostname}:5000`;
         const respuesta = await fetch(`${API_URL}/eventos`);
 
         if (!respuesta.ok) {
